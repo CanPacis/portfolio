@@ -113,8 +113,8 @@ export function Bubbles() {
     renderer: _context,
     onRender: renderSelection,
     onCaptureInit: () => {
-      setSelection([]);
       bubbles.current.forEach((bubble) => (bubble.selected = false));
+      setSelection([]);
     },
     onCaptureEnd(event) {
       bubbles.current.forEach((bubble) => bubble.setSelection(event.detail.area));
@@ -135,10 +135,10 @@ export function Bubbles() {
         selectRender();
       }
 
-      return requestAnimationFrame(animate);
+      animation.current = requestAnimationFrame(animate);
     };
 
-    return animate();
+    animate();
   }, [selectRender]);
 
   useEffect(() => {
@@ -162,7 +162,7 @@ export function Bubbles() {
   }, []);
 
   useEffect(() => {
-    animation.current = render();
+    render();
 
     return () => {
       cancelAnimationFrame(animation.current);
