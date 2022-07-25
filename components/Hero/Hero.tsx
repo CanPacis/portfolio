@@ -5,37 +5,36 @@ import { selectionStore } from "../../store/selectionStore";
 export function Hero() {
   const selected = useRecoilValue(selectionStore);
 
-  console.log(selected);
-
   return (
     <Group sx={{ flex: 1, flexDirection: "column", alignItems: "start" }}>
-      <Title
-        data-capture-target="hero-title"
-        order={1}
-        p="xs"
-        sx={(theme) => ({
-          position: "relative",
-          fontWeight: 400,
-          fontSize: 67,
-          fontFamily: "Comfortaa",
-          color: theme.colors.blue[5],
-          border: "2px solid",
-          borderColor: selected.includes("hero-title") ? theme.fn.rgba(theme.colors.pink[5], 0.4) : "transparent",
-          borderRadius: theme.radius.sm,
-        })}
-      >
-        Hello There,
-        <br />
-        This is
-        <br />
-        Muhammed Ali.
+      <Group sx={{ position: "relative" }}>
+        <Title
+          data-capture-target="hero-title"
+          order={1}
+          p="xs"
+          sx={(theme) => ({
+            fontWeight: 400,
+            fontSize: 67,
+            fontFamily: "Comfortaa",
+            color: theme.colors.blue[5],
+            border: "2px solid",
+            borderColor: selected.includes("hero-title") ? theme.fn.rgba(theme.colors.pink[5], 0.4) : "transparent",
+            borderRadius: theme.radius.sm,
+          })}
+        >
+          Hello There,
+          <br />
+          This is
+          <br />
+          Muhammed Ali.
+        </Title>
         <Title
           order={1}
           p="xs"
           sx={(theme) => ({
             position: "absolute",
             top: -2,
-            left: -6,
+            left: -3,
             color: theme.white,
             fontWeight: 400,
             fontSize: 67,
@@ -48,7 +47,7 @@ export function Hero() {
           <br />
           Muhammed Ali.
         </Title>
-      </Title>
+      </Group>
       <Title
         data-capture-target="hero-subtitle"
         order={2}

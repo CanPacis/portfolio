@@ -1,3 +1,4 @@
+// 400 lines of unadulterated math and DOM manipulation and lots of refs
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export interface Vector2D {
