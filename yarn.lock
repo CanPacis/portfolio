@@ -216,6 +216,13 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@mantine/carousel@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-5.0.0.tgz#bd0a33ea18de89be529c3f2a4612593e903efa67"
+  integrity sha512-MUlBuO0vfZ8QDGEYT2gyt51ylnro0W+rmRg3fgqU1gEHAxa39/twE34BFSY71kxo7jiQG1ribUehR1uV3NH5wA==
+  dependencies:
+    "@mantine/utils" "5.0.0"
+
 "@mantine/core@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.0.0.tgz#a1602bb59f0652532c6856ac31d594c55a1219a2"
@@ -908,6 +915,18 @@ duplexer2@^0.1.2:
   dependencies:
     readable-stream "^2.0.2"
 
+embla-carousel-react@^7.0.0-rc05:
+  version "7.0.0-rc05"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.0.0-rc05.tgz#09f3e0bec80403fd6f37cef59361484494d4f782"
+  integrity sha512-OYvx48Y/4/VeicKctqz1lsx97Z3ve6lmqmOr1SpL5N7JZyJVbegNopgPy/bi0H865JvyccaxFGxHFAr0YU7OKg==
+  dependencies:
+    embla-carousel "7.0.0-rc05"
+
+embla-carousel@7.0.0-rc05:
+  version "7.0.0-rc05"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.0.0-rc05.tgz#0c70393cb9284435c8242d9ec9e5e754ef81749d"
+  integrity sha512-zRPQniDxj3t3Q/okKzP8XsMRtANItAK7nhQ3Smpqfbtw3OMoZRebojUDCMD02sb5CY7ghYqL/XFEuXxS/7vJ5w==
+
 emoji-regex@^9.2.2:
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
@@ -1364,6 +1383,11 @@ globby@^11.1.0:
     ignore "^5.2.0"
     merge2 "^1.4.1"
     slash "^3.0.0"
+
+hamt_plus@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hamt_plus/-/hamt_plus-1.0.2.tgz#e21c252968c7e33b20f6a1b094cd85787a265601"
+  integrity sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==
 
 has-bigints@^1.0.1, has-bigints@^1.0.2:
   version "1.0.2"
@@ -2044,6 +2068,13 @@ readable-stream@~1.0.17, readable-stream@~1.0.27-1:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
+recoil@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.7.4.tgz#d6508fa656d9c93e66fdf334e1f723a9e98801cf"
+  integrity sha512-sCXvQGMfSprkNU4ZRkJV4B0qFQSURJMgsICqY1952WRlg66NMwYqi6n67vhnhn0qw4zHU1gHXJuMvRDaiRNFZw==
+  dependencies:
+    hamt_plus "1.0.2"
+
 regenerator-runtime@^0.13.4:
   version "0.13.9"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
@@ -2275,6 +2306,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+tabler-icons-react@^1.53.0:
+  version "1.53.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-react/-/tabler-icons-react-1.53.0.tgz#abff11951e9f8637174f48c3c3433f6d7bd8c5dc"
+  integrity sha512-48csX1qiZaXK0yPgNmvkgsZSyqxBU0AVGGzT4DXh1CVEcTkKF39rQP7EeLYeTGeCnM2Ot9tSiKfay1FLOzr0Rg==
 
 text-table@^0.2.0:
   version "0.2.0"
