@@ -19,6 +19,13 @@ class Bubble {
     this.y = Math.random() * window.innerHeight;
     this.radius = 4;
     this.direction = {
+      x: 0,
+      y: 0,
+    };
+  }
+
+  setDirection() {
+    this.direction = {
       x: (Math.random() - 0.5) / 2,
       y: (Math.random() - 0.5) / 2,
     };
@@ -104,17 +111,19 @@ export function Bubbles() {
     animate();
   }, [selectRender]);
 
-
   useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas || typeof window === "undefined") return;
-
     bubbles.current = new Array(80).fill(null).map(() => new Bubble());
     bubbles.current.forEach((bubble, index) => {
+      bubble.setDirection();
       if (index > 0) {
         bubble.setNeighbours(bubbles.current.slice(0, index));
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas || typeof window === "undefined") return;
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -122,7 +131,7 @@ export function Bubbles() {
     _context.current = context;
 
     render();
-  }, []);
+  }, [render]);
 
   return (
     <div ref={selectRef}>
