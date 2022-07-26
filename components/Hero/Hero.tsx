@@ -22,6 +22,7 @@ export function Hero() {
       <Group sx={{ position: "relative" }}>
         <Title
           data-capture-target="hero-title"
+          data-non-drag-target
           order={1}
           p="xs"
           sx={(theme) => ({
@@ -62,6 +63,7 @@ export function Hero() {
       </Group>
       <Title
         data-capture-target="hero-subtitle"
+        data-non-drag-target
         order={2}
         p="xs"
         sx={(theme) => ({
@@ -79,6 +81,7 @@ export function Hero() {
       <Text
         p="xs"
         data-capture-target="hero-description"
+        data-non-drag-target
         sx={(theme) => ({
           border: "2px solid",
           borderColor: selected.includes("hero-description") ? theme.fn.rgba(theme.colors.pink[5], 0.4) : "transparent",
