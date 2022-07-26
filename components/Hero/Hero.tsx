@@ -88,9 +88,9 @@ export function Hero() {
           borderRadius: theme.radius.sm,
         })}
       >
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit.
+        I am a self-taught programmer with immense curiosity, not only a learner but also a lover of learning. I taught
+        myself playing the guitar and the piano, I learned English almost all on my own and I taught myself programming.
+        I still seek knowledge and try to learn new stuff in every front.
       </Text>
     </Group>
   );

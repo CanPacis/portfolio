@@ -46,8 +46,8 @@ export class Bubble {
 
   setDirection() {
     this.direction = {
-      x: (Math.random() - 0.5) / 2,
-      y: (Math.random() - 0.5) / 2,
+      x: (Math.random() - 0.5),
+      y: (Math.random() - 0.5),
     };
   }
 

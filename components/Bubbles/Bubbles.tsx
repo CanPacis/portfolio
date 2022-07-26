@@ -1,11 +1,10 @@
-import { useHotkeys } from "@mantine/hooks";
+import { useHotkeys, useReducedMotion } from "@mantine/hooks";
 import { useCallback, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
 import classes from "../../styles/Bubbles.module.css";
 import { Bubble } from "./Bubble";
 import { useSelect, defaultRender } from "./useSelect";
-
 const renderSelection = defaultRender();
 const DENSITY_CONSTANT = 14000;
 
@@ -15,6 +14,7 @@ export function Bubbles() {
   const [, setSelection] = useRecoilState(selectionStore);
   const animation = useRef(0);
   const bubbles = useRef<Bubble[]>([]);
+  const reduceMotion = useReducedMotion();
   const {
     render: selectRender,
     ref: selectRef,
@@ -66,13 +66,13 @@ export function Bubbles() {
     animate();
   }, [selectRender]);
 
-  const updateBubbles = useCallback((totalUpdate = true) => {
+  const updateBubbles = useCallback((setDirection = true, chosePosition = true) => {
     bubbles.current.forEach((bubble, index) => {
-      if (totalUpdate) bubble.setDirection();
+      if (setDirection) bubble.setDirection();
       bubble.avoidTargets = Array.from(document.querySelectorAll("[data-non-drag-target=true]")).map((target) =>
         target.getBoundingClientRect()
       );
-      if (totalUpdate) bubble.choosePosition();
+      if (chosePosition) bubble.choosePosition();
       if (index > 0) {
         bubble.setNeighbours(bubbles.current.slice(0, index));
       }
@@ -91,18 +91,19 @@ export function Bubbles() {
       "delete",
       () => {
         bubbles.current = bubbles.current.filter((bubble) => bubble.selected === false);
-        updateBubbles(false);
+        updateBubbles(false, false);
       },
     ],
     [
       "space",
       () => {
         const bubble = new Bubble();
-        console.log(bubble)
+        console.log(bubble);
         bubble.x = window.innerWidth / 2;
         bubble.y = window.innerHeight / 2;
         bubbles.current.push(bubble);
-        updateBubbles(false);
+        bubble.setDirection();
+        updateBubbles(false, false);
       },
     ],
   ]);
@@ -125,7 +126,7 @@ export function Bubbles() {
     };
   }, [render]);
 
-  return (
+  return reduceMotion ? null : (
     <div className={classes.bubblesWrapper} ref={selectRef}>
       <canvas ref={ref} className={classes.canvas} />
     </div>
