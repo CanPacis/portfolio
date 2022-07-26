@@ -124,6 +124,12 @@ export function Bubbles() {
         bubbles.current.forEach((bubble) => (bubble.selected = true));
       },
     ],
+    [
+      "ctrl+d",
+      () => {
+        bubbles.current.forEach((bubble) => (bubble.selected = false));
+      },
+    ],
   ]);
 
   useEffect(() => {
