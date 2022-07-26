@@ -74,7 +74,7 @@ export function Showcase() {
         ]}
       />
 
-      <Carousel sx={{ maxWidth: "50%" }} mx="auto" withControls={false} withIndicators height={600}>
+      <Carousel data-non-drag-target sx={{ maxWidth: "50%" }} mx="auto" withControls={false} withIndicators height={600}>
         {projects.map((project) => (
           <Carousel.Slide key={project.link}>
             <Card shadow="sm" p="lg" radius="md" withBorder>

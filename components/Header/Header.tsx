@@ -28,7 +28,17 @@ export function Header() {
   return (
     <header className={classes.headerDesktop}>
       <Group>
-        <Avatar radius={60} size={60} src="/profile-picture.png" alt="Profile picture" />
+        <Avatar
+          radius={60}
+          size={60}
+          src="/profile-picture.png"
+          alt="Profile picture"
+          data-capture-target="profile-picture"
+          sx={(theme) => ({
+            border: "3px solid",
+            borderColor: selected.includes("profile-picture") ? theme.colors.blue[5] : "transparent",
+          })}
+        />
       </Group>
       <Divider size="sm" color="blue" orientation="vertical" sx={{ margin: "auto", opacity: 0.4 }} />
       <Group sx={{ flexDirection: "column" }}>

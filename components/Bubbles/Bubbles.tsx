@@ -114,10 +114,12 @@ export function Bubbles() {
     renderer: _context,
     onRender: renderSelection,
     onCaptureInit: () => {
+      if (ref.current) ref.current.style.zIndex = "999";
       bubbles.current.forEach((bubble) => (bubble.selected = false));
       setSelection([]);
     },
     onCaptureEnd(event) {
+      if (ref.current) ref.current.style.zIndex = "0";
       bubbles.current.forEach((bubble) => bubble.setSelection(event.detail.area));
       setSelection(event.detail.captures.map((capture) => capture.id));
     },
