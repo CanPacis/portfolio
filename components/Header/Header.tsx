@@ -2,6 +2,8 @@ import { BrandLinkedin, BrandGithub, BrandDiscord, BrandStackoverflow } from "ta
 import { Avatar, Divider, Group, ActionIcon, Tooltip } from "@mantine/core";
 import classes from "../../styles/Header.module.css";
 import Link from "next/link";
+import { useRecoilValue } from "recoil";
+import { selectionStore } from "../../store/selectionStore";
 
 interface ContactItem {
   label: string;
@@ -10,6 +12,8 @@ interface ContactItem {
 }
 
 export function Header() {
+  const selected = useRecoilValue(selectionStore);
+
   const links: ContactItem[] = [
     { label: "LinkedIn", url: "https://www.linkedin.com/in/muhammed-ali-can-45761a206/", icon: <BrandLinkedin /> },
     { label: "Github", url: "https://github.com/CanPacis/", icon: <BrandGithub /> },
@@ -29,10 +33,12 @@ export function Header() {
       <Divider size="sm" color="blue" orientation="vertical" sx={{ margin: "auto", opacity: 0.4 }} />
       <Group sx={{ flexDirection: "column" }}>
         {links.map((link) => (
-          <span key={link.url} data-non-drag-target>
-          <Link passHref target="_blank" href={link.url}>
-            <ActionIcon component="a">{link.icon}</ActionIcon>
-          </Link>
+          <span key={link.url} data-capture-target={link.label} data-non-drag-target>
+            <Link passHref target="_blank" href={link.url}>
+              <ActionIcon color="blue" variant={selected.includes(link.label) ? "filled" : "light"} component="a">
+                {link.icon}
+              </ActionIcon>
+            </Link>
           </span>
         ))}
       </Group>

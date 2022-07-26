@@ -1,3 +1,4 @@
+import { useHotkeys } from "@mantine/hooks";
 import { useCallback, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
@@ -141,15 +142,40 @@ export function Bubbles() {
     animate();
   }, [selectRender]);
 
-  useEffect(() => {
-    bubbles.current = new Array(80).fill(null).map(() => new Bubble());
+  const updateBubbles = useCallback(() => {
     bubbles.current.forEach((bubble, index) => {
       bubble.setDirection();
       if (index > 0) {
         bubble.setNeighbours(bubbles.current.slice(0, index));
       }
     });
+  }, [])
+
+  useEffect(() => {
+    bubbles.current = new Array(80).fill(null).map(() => new Bubble());
+    updateBubbles()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useHotkeys([
+    [
+      "delete",
+      () => {
+        bubbles.current = bubbles.current.filter((bubble) => bubble.selected === false);
+        updateBubbles()
+      },
+    ],
+    [
+      "space",
+      () => {
+        const bubble = new Bubble();
+        bubble.x = window.innerWidth / 2;
+        bubble.y = window.innerHeight / 2;
+        bubbles.current.push(bubble);
+        updateBubbles()
+      },
+    ],
+  ]);
 
   useEffect(() => {
     const canvas = ref.current;
