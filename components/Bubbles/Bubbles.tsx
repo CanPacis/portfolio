@@ -114,15 +114,21 @@ export function Bubbles() {
     renderer: _context,
     onRender: renderSelection,
     onCaptureInit: () => {
-      if (ref.current) ref.current.style.zIndex = "999";
       bubbles.current.forEach((bubble) => (bubble.selected = false));
       setSelection([]);
+    },
+    onCaptureStart: () => {
+      if (ref.current) ref.current.style.zIndex = "999";
+    },
+    onCaptureCancel() {
+      if (ref.current) ref.current.style.zIndex = "0";
     },
     onCaptureEnd(event) {
       if (ref.current) ref.current.style.zIndex = "0";
       bubbles.current.forEach((bubble) => bubble.setSelection(event.detail.area));
       setSelection(event.detail.captures.map((capture) => capture.id));
     },
+    minCaptureArea: 0,
   });
 
   const render = useCallback(() => {
@@ -151,12 +157,12 @@ export function Bubbles() {
         bubble.setNeighbours(bubbles.current.slice(0, index));
       }
     });
-  }, [])
+  }, []);
 
   useEffect(() => {
     bubbles.current = new Array(80).fill(null).map(() => new Bubble());
-    updateBubbles()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    updateBubbles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useHotkeys([
@@ -164,7 +170,7 @@ export function Bubbles() {
       "delete",
       () => {
         bubbles.current = bubbles.current.filter((bubble) => bubble.selected === false);
-        updateBubbles()
+        updateBubbles();
       },
     ],
     [
@@ -174,7 +180,7 @@ export function Bubbles() {
         bubble.x = window.innerWidth / 2;
         bubble.y = window.innerHeight / 2;
         bubbles.current.push(bubble);
-        updateBubbles()
+        updateBubbles();
       },
     ],
   ]);

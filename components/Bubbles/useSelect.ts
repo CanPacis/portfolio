@@ -29,6 +29,7 @@ export interface UseSelectOptions {
   onCaptureStart?: (event: MouseEvent) => void;
   onCaptureInit?: (event: MouseEvent) => void;
   onCaptureEnd?: (event: CustomEvent<CaptureEvent>) => void;
+  onCaptureCancel?: (event: MouseEvent) => void;
   onCapture?: (event: CustomEvent<CaptureEvent>) => void;
   minCaptureArea?: number;
 }
@@ -250,7 +251,12 @@ function useRender({
       captures.current = [];
       const isMinimumSupplied = rect.width * rect.height > (options?.minCaptureArea || 0);
 
-      if (!isMinimumSupplied) return;
+      if (!isMinimumSupplied) {
+        if (options?.onCaptureCancel) {
+          options.onCaptureCancel(event);
+        }
+        return;
+      }
 
       const captureTargets = getCaptureTargets(parent!, captureTargetsStore);
       const currentCaptures: CaptureResult[] = [];
