@@ -6,6 +6,7 @@ import classes from "../../styles/Bubbles.module.css";
 import { useSelect, defaultRender, Rect } from "./useSelect";
 
 const renderSelection = defaultRender();
+const DENSITY_CONSTANT = 14000;
 
 class Bubble {
   x: number;
@@ -110,7 +111,11 @@ export function Bubbles() {
   const [, setSelection] = useRecoilState(selectionStore);
   const animation = useRef(0);
   const bubbles = useRef<Bubble[]>([]);
-  const { render: selectRender, ref: selectRef } = useSelect<HTMLDivElement>({
+  const {
+    render: selectRender,
+    ref: selectRef,
+    size,
+  } = useSelect<HTMLDivElement>({
     renderer: _context,
     onRender: renderSelection,
     onCaptureInit: () => {
@@ -118,18 +123,25 @@ export function Bubbles() {
       setSelection([]);
     },
     onCaptureStart: () => {
-      if (ref.current) ref.current.style.zIndex = "999";
+      if (selectRef.current) selectRef.current.style.zIndex = "999";
     },
     onCaptureCancel() {
-      if (ref.current) ref.current.style.zIndex = "0";
+      if (selectRef.current) selectRef.current.style.zIndex = "0";
     },
     onCaptureEnd(event) {
-      if (ref.current) ref.current.style.zIndex = "0";
+      if (selectRef.current) selectRef.current.style.zIndex = "0";
       bubbles.current.forEach((bubble) => bubble.setSelection(event.detail.area));
       setSelection(event.detail.captures.map((capture) => capture.id));
     },
     minCaptureArea: 0,
   });
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.width = size.width;
+      ref.current.height = size.height;
+    }
+  }, [size]);
 
   const render = useCallback(() => {
     const context = _context.current;
@@ -160,7 +172,8 @@ export function Bubbles() {
   }, []);
 
   useEffect(() => {
-    bubbles.current = new Array(80).fill(null).map(() => new Bubble());
+    const amount = Math.floor((window.innerWidth * window.innerHeight) / DENSITY_CONSTANT);
+    bubbles.current = new Array(amount).fill(null).map(() => new Bubble());
     updateBubbles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -204,7 +217,7 @@ export function Bubbles() {
   }, [render]);
 
   return (
-    <div ref={selectRef}>
+    <div className={classes.bubblesWrapper} ref={selectRef}>
       <canvas ref={ref} className={classes.canvas} />
     </div>
   );

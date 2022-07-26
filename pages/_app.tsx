@@ -1,11 +1,14 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { AppShell, MantineProvider } from "@mantine/core";
 import { uiCache } from "../ui-cache";
 import { RecoilRoot } from "recoil";
+import { useMediaQuery } from "@mantine/hooks";
+import { TABLET_SIZE } from "../store/responsiveStore";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const isTablet = useMediaQuery(TABLET_SIZE);
 
   return (
     <>
@@ -39,7 +42,18 @@ export default function App(props: AppProps) {
             fontFamily: "Comfortaa",
           }}
         >
-          <Component {...pageProps} />
+          <AppShell
+            styles={(theme) => ({
+              main: {
+                backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
+                padding: 0,
+                display: "flex",
+                flexDirection: isTablet ? "column" : "row",
+              },
+            })}
+          >
+            <Component {...pageProps} />
+          </AppShell>
         </MantineProvider>
       </RecoilRoot>
     </>

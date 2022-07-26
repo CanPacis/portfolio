@@ -1,12 +1,24 @@
 import { Group, Title, Text } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useRecoilValue } from "recoil";
+import { TABLET_SIZE, MOBILE_SIZE } from "../../store/responsiveStore";
 import { selectionStore } from "../../store/selectionStore";
 
 export function Hero() {
   const selected = useRecoilValue(selectionStore);
+  const isTablet = useMediaQuery(TABLET_SIZE);
+  const isMobile = useMediaQuery(MOBILE_SIZE);
 
   return (
-    <Group sx={{ flex: 1, flexDirection: "column", alignItems: "start" }}>
+    <Group
+      sx={(theme) => ({
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "start",
+        padding: isTablet ? "4px 12px" : 0,
+        gap: isMobile ? 0 : theme.spacing.lg,
+      })}
+    >
       <Group sx={{ position: "relative" }}>
         <Title
           data-capture-target="hero-title"
@@ -14,7 +26,7 @@ export function Hero() {
           p="xs"
           sx={(theme) => ({
             fontWeight: 400,
-            fontSize: 67,
+            fontSize: isMobile ? "2.6em" : "4em",
             fontFamily: "Comfortaa",
             color: theme.colors.blue[5],
             border: "2px solid",
@@ -33,11 +45,11 @@ export function Hero() {
           p="xs"
           sx={(theme) => ({
             position: "absolute",
-            top: -2,
-            left: -3,
+            top: isMobile ? -1 : -2,
+            left: isMobile ? -1 : -3,
             color: theme.white,
             fontWeight: 400,
-            fontSize: 67,
+            fontSize: isMobile ? "2.6em" : "4em",
             fontFamily: "Comfortaa",
           })}
         >
@@ -54,7 +66,7 @@ export function Hero() {
         p="xs"
         sx={(theme) => ({
           fontWeight: 400,
-          fontSize: 40,
+          fontSize: "2em",
           color: theme.fn.rgba(theme.colors.blue[5], 0.4),
           border: "2px solid",
           borderColor: selected.includes("hero-subtitle") ? theme.fn.rgba(theme.colors.pink[5], 0.4) : "transparent",

@@ -4,6 +4,8 @@ import classes from "../../styles/Header.module.css";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
+import { useMediaQuery } from "@mantine/hooks";
+import { TABLET_SIZE, MOBILE_SIZE } from "../../store/responsiveStore";
 
 interface ContactItem {
   label: string;
@@ -13,6 +15,8 @@ interface ContactItem {
 
 export function Header() {
   const selected = useRecoilValue(selectionStore);
+  const isTablet = useMediaQuery(TABLET_SIZE);
+  const isMobile = useMediaQuery(MOBILE_SIZE);
 
   const links: ContactItem[] = [
     { label: "LinkedIn", url: "https://www.linkedin.com/in/muhammed-ali-can-45761a206/", icon: <BrandLinkedin /> },
@@ -26,7 +30,7 @@ export function Header() {
   ];
 
   return (
-    <header className={classes.headerDesktop}>
+    <header className={!isTablet ? classes.headerDesktop : classes.headerMobile}>
       <Group>
         <Avatar
           radius={60}
@@ -40,8 +44,18 @@ export function Header() {
           })}
         />
       </Group>
-      <Divider size="sm" color="blue" orientation="vertical" sx={{ margin: "auto", opacity: 0.4 }} />
-      <Group sx={{ flexDirection: "column" }}>
+      <Divider
+        size="sm"
+        color="blue"
+        orientation={isTablet ? "horizontal" : "vertical"}
+        sx={{ margin: "auto", opacity: 0.4, flex: 1 }}
+      />
+      <Group
+        sx={(theme) => ({
+          flexDirection: isTablet ? "row" : "column",
+          gap: isMobile ? theme.spacing.xs : theme.spacing.md,
+        })}
+      >
         {links.map((link) => (
           <span key={link.url} data-capture-target={link.label} data-non-drag-target>
             <Link passHref target="_blank" href={link.url}>
@@ -52,7 +66,14 @@ export function Header() {
           </span>
         ))}
       </Group>
-      <Divider size="sm" color="blue" orientation="vertical" sx={{ margin: "auto", opacity: 0.4, height: 100 }} />
+      {!isMobile && (
+        <Divider
+          size="sm"
+          color="blue"
+          orientation={isTablet ? "horizontal" : "vertical"}
+          sx={{ margin: "auto", opacity: 0.4, [isTablet ? "width" : "height"]: isMobile ? 30 : 100 }}
+        />
+      )}
     </header>
   );
 }

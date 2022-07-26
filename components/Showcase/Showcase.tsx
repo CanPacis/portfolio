@@ -1,5 +1,8 @@
 import { Carousel } from "@mantine/carousel";
 import { Badge, Button, Card, Group, SegmentedControl, Text, Image } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import Link from "next/link";
+import { TABLET_SIZE, MOBILE_SIZE, DESKTOP_SIZE } from "../../store/responsiveStore";
 
 interface Project {
   title: string;
@@ -7,6 +10,7 @@ interface Project {
   image: string;
   link: string;
   tags: string[];
+  actionLabel: string;
 }
 
 const projects: Project[] = [
@@ -17,6 +21,7 @@ const projects: Project[] = [
     image: "/kasif.png",
     link: "https://github.com/Kasif-The-Explorer/kasif-the-explorer",
     tags: ["React", "Desktop App"],
+    actionLabel: "See the repo",
   },
   {
     title: "Affixi",
@@ -25,6 +30,7 @@ const projects: Project[] = [
       "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
     link: "https://github.com/CanPacis/affixi",
     tags: ["Library", "TypeScript"],
+    actionLabel: "See the repo",
   },
   {
     title: "Birlang",
@@ -33,6 +39,7 @@ const projects: Project[] = [
       "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
     link: "https://github.com/CanPacis/bir",
     tags: ["Experimental", "TypeScript"],
+    actionLabel: "See the repo",
   },
   {
     title: "Birlang Go",
@@ -41,6 +48,7 @@ const projects: Project[] = [
       "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
     link: "https://github.com/CanPacis/birlang",
     tags: ["Experimental", "Go"],
+    actionLabel: "See the repo",
   },
   {
     title: "Betic",
@@ -49,23 +57,38 @@ const projects: Project[] = [
       "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
     link: "https://github.com/CanPacis/betic",
     tags: ["Experimental", "TypeScript"],
+    actionLabel: "See the repo",
   },
-  // {
-  //   title: "Mantine",
-  //   description:
-  //     "A fully featured React components library. Build fully functional accessible web applications faster than ever – Mantine includes more than 100 customizable components and 40 hooks to cover you in any situation",
-  // image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png",
-  //   link: "mantine.dev",
-  //   tags: ["Library", "Contribution"],
-  // },
+  {
+    title: "Mantine",
+    description:
+      "A fully featured React components library. Build fully functional accessible web applications faster than ever - Mantine includes more than 100 customizable components and 40 hooks to cover you in any situation",
+    image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png",
+    link: "https://mantine.dev",
+    tags: ["Library", "Contribution"],
+    actionLabel: "See the website",
+  },
 ];
 
 export function Showcase() {
+  const isDesktop = useMediaQuery(DESKTOP_SIZE);
+  const isTablet = useMediaQuery(TABLET_SIZE);
+  const isMobile = useMediaQuery(MOBILE_SIZE);
+
   return (
-    <Group sx={{ flex: 1, flexDirection: "column", alignItems: "center" }}>
+    <Group
+      sx={{
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        width: isTablet ? "100vw" : "auto",
+        padding: isTablet ? "4px 12px" : 0,
+        maxWidth: isTablet ? "100vw" : "40vw",
+      }}
+    >
       <SegmentedControl
         data-non-drag-target
-        size="lg"
+        size={isMobile ? "sm" : "lg"}
         data={[
           { label: "Projects", value: "projects" },
           { label: "Experience", value: "experience" },
@@ -74,7 +97,13 @@ export function Showcase() {
         ]}
       />
 
-      <Carousel data-non-drag-target sx={{ maxWidth: "50%" }} mx="auto" withControls={false} withIndicators height={600}>
+      <Carousel
+        data-non-drag-target
+        sx={{ maxWidth: isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%" }}
+        withControls={false}
+        withIndicators
+        height={600}
+      >
         {projects.map((project) => (
           <Carousel.Slide key={project.link}>
             <Card shadow="sm" p="lg" radius="md" withBorder>
@@ -97,9 +126,11 @@ export function Showcase() {
                 {project.description}
               </Text>
 
-              <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-                Book classic tour now
-              </Button>
+              <Link passHref href={project.link}>
+                <Button component="a" variant="light" color="blue" fullWidth mt="md" radius="md">
+                  {project.actionLabel}
+                </Button>
+              </Link>
             </Card>
           </Carousel.Slide>
         ))}

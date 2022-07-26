@@ -347,6 +347,9 @@ function useRender({
       document.addEventListener("mousedown", onMouseDown);
       document.addEventListener("mouseup", onMouseUp);
       document.addEventListener("mousemove", onMouseMove);
+      // document.addEventListener("touchstart", onMouseDown);
+      // document.addEventListener("touchend", onMouseUp);
+      // document.addEventListener("touchmove", onMouseMove);
     }
 
     return () => {
@@ -354,6 +357,9 @@ function useRender({
         document.removeEventListener("mousedown", onMouseDown);
         document.removeEventListener("mouseup", onMouseUp);
         document.removeEventListener("mousemove", onMouseMove);
+        // document.removeEventListener("touchstart", onMouseDown);
+        // document.removeEventListener("touchend", onMouseUp);
+        // document.removeEventListener("touchmove", onMouseMove);
       }
     };
   });
@@ -367,7 +373,7 @@ function useRender({
 
 export function useSelect<T extends HTMLElement>(
   options?: UseSelectOptions
-): { ref: React.RefObject<T>; context: CaptureTargetContext; render: () => void } {
+): { ref: React.RefObject<T>; context: CaptureTargetContext; render: () => void; size: Size2D } {
   const { captureTargets, addCaptureTarget, removeCaptureTarget } = useCaptureTargetStore();
   const { ref, width, height } = useElementSize<T>();
 
@@ -384,7 +390,7 @@ export function useSelect<T extends HTMLElement>(
     }
   }, [ref]);
 
-  return { ref, context: [addCaptureTarget, removeCaptureTarget], render };
+  return { ref, context: [addCaptureTarget, removeCaptureTarget], render, size: { width, height } };
 }
 
 export function useCaptureTarget<T extends HTMLElement>(context: CaptureTargetContext, detail: any) {
