@@ -10,7 +10,7 @@ export class Bubble {
   avoidTargets: DOMRect[] = [];
 
   constructor() {
-    this.radius = 4;
+    this.radius = 5;
     this.direction = {
       x: 0,
       y: 0,
@@ -46,8 +46,8 @@ export class Bubble {
 
   setDirection() {
     this.direction = {
-      x: (Math.random() - 0.5),
-      y: (Math.random() - 0.5),
+      x: Math.random() - 0.5,
+      y: Math.random() - 0.5,
     };
   }
 
@@ -76,16 +76,22 @@ export class Bubble {
     }
   }
 
-  render(context: CanvasRenderingContext2D) {
-    for (const rect of this.avoidTargets) {
-      if (this.x + this.radius <= rect.x || this.x + this.radius >= rect.x + rect.width) {
-        this.direction.x *= -1;
-      }
-      if (this.y + this.radius <= rect.y || this.y + this.radius >= rect.y + rect.height) {
-        this.direction.y *= -1;
-      }
+  drawShape(context: CanvasRenderingContext2D, ring = false) {
+    const size = ring ? this.radius + 2 : this.radius;
+    const x = this.x;
+    const y = this.y;
+
+    context.beginPath();
+    context.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+
+    for (let side = 0; side < 7; side++) {
+      context.lineTo(x + size * Math.cos((side * 2 * Math.PI) / 6), y + size * Math.sin((side * 2 * Math.PI) / 6));
     }
 
+    ring ? context.stroke() : context.fill();
+  }
+
+  render(context: CanvasRenderingContext2D) {
     if (this.x < 0 || this.x > window.innerWidth) {
       this.direction.x *= -1;
     }
@@ -110,25 +116,15 @@ export class Bubble {
       }
     }
 
-    context.beginPath();
-    context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    context.fill();
+    context.save();
 
     if (this.selected) {
-      context.save();
       context.fillStyle = "rgba(51,154,240,.3)";
       context.strokeStyle = "rgba(51,154,240,.3)";
-      context.beginPath();
-      context.arc(this.x, this.y, this.radius + 2, 0, 2 * Math.PI);
-      context.stroke();
-      context.beginPath();
-      context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      context.fill();
-      context.restore();
-    } else {
-      context.beginPath();
-      context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      context.fill();
+      this.drawShape(context, true);
     }
+
+    this.drawShape(context);
+    context.restore();
   }
 }

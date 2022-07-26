@@ -1,4 +1,4 @@
-import { useHotkeys, useReducedMotion } from "@mantine/hooks";
+import { useHotkeys, useInterval, useReducedMotion } from "@mantine/hooks";
 import { useCallback, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
@@ -66,23 +66,37 @@ export function Bubbles() {
     animate();
   }, [selectRender]);
 
-  const updateBubbles = useCallback((setDirection = true, chosePosition = true) => {
+  const updateBubbles = useCallback((update = true) => {
     bubbles.current.forEach((bubble, index) => {
-      if (setDirection) bubble.setDirection();
+      if (update) bubble.setDirection();
       bubble.avoidTargets = Array.from(document.querySelectorAll("[data-non-drag-target=true]")).map((target) =>
         target.getBoundingClientRect()
       );
-      if (chosePosition) bubble.choosePosition();
+      if (update) bubble.choosePosition();
       if (index > 0) {
         bubble.setNeighbours(bubbles.current.slice(0, index));
       }
     });
   }, []);
 
-  useEffect(() => {
+  const interval = useInterval(() => {
     const amount = Math.floor((window.innerWidth * window.innerHeight) / DENSITY_CONSTANT);
-    bubbles.current = new Array(amount).fill(null).map(() => new Bubble());
-    updateBubbles();
+
+    if (bubbles.current.length < amount) {
+      const bubble = new Bubble();
+      bubble.choosePosition();
+      bubble.setDirection();
+      bubbles.current.push(bubble);
+      updateBubbles(false);
+    } else {
+      interval.stop();
+    }
+  }, 200);
+
+  useEffect(() => {
+    interval.start();
+
+    return interval.stop;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -91,19 +105,23 @@ export function Bubbles() {
       "delete",
       () => {
         bubbles.current = bubbles.current.filter((bubble) => bubble.selected === false);
-        updateBubbles(false, false);
+        updateBubbles(false);
       },
     ],
     [
       "space",
       () => {
         const bubble = new Bubble();
-        console.log(bubble);
-        bubble.x = window.innerWidth / 2;
-        bubble.y = window.innerHeight / 2;
         bubbles.current.push(bubble);
+        bubble.choosePosition();
         bubble.setDirection();
-        updateBubbles(false, false);
+        updateBubbles(false);
+      },
+    ],
+    [
+      "ctrl+a",
+      () => {
+        bubbles.current.forEach((bubble) => (bubble.selected = true));
       },
     ],
   ]);
