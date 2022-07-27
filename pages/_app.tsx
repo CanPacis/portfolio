@@ -1,6 +1,8 @@
+import "../styles/global.css";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { AppShell, MantineProvider } from "@mantine/core";
+import { Footer } from "../components/Footer";
 import { uiCache } from "../ui-cache";
 import { RecoilRoot } from "recoil";
 import { useMediaQuery } from "@mantine/hooks";
@@ -28,11 +30,11 @@ export default function App(props: AppProps) {
               dark: [
                 "#F4FFFD",
                 "#F4FFFD",
-                "#6C6D76",
+                "#83838B",
                 "#1D1E2C",
                 "#343441",
                 "#282937",
-                "#1D1E2C",
+                "#282937",
                 "#2F3043",
                 "#1D1E2C",
                 "#1D1E2C",
@@ -43,12 +45,15 @@ export default function App(props: AppProps) {
           }}
         >
           <AppShell
+            footer={<Footer />}
             styles={(theme) => ({
               main: {
                 backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
                 padding: 0,
                 display: "flex",
                 flexDirection: isTablet ? "column" : "row",
+                height: "calc(100vh - var(--footer-height))",
+                minHeight: "calc(100vh - var(--footer-height))",
               },
             })}
           >

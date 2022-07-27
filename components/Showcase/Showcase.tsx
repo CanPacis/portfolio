@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { Badge, Button, Card, Group, SegmentedControl, Text, Image, Mark } from "@mantine/core";
+import { Badge, Divider, Button, Card, Group, SegmentedControl, Text, Image, Mark } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import { useState } from "react";
@@ -52,15 +52,15 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
       description: "A helper library for Turkish noun suffixes written in typescript.",
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-      link: "https://github.com/CanPacis/affixi",
+      link: "https://canpacis.github.io/affixi/",
       tags: ["Library", "TypeScript"],
-      actionLabel: "See the repo",
+      actionLabel: "See the docs",
     },
     {
       title: "Birlang",
       description: "Bir language where only one type exists.",
       image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+        "/birlang.png",
       link: "https://github.com/CanPacis/bir",
       tags: ["Experimental", "TypeScript"],
       actionLabel: "See the repo",
@@ -69,7 +69,7 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
       title: "Birlang Go",
       description: "Bir language where only one type exists. But written in Go.",
       image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+        "birlang-go.png",
       link: "https://github.com/CanPacis/birlang",
       tags: ["Experimental", "Go"],
       actionLabel: "See the repo",
@@ -78,7 +78,7 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
       title: "Betic",
       description: "Another programming language attempt",
       image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+        "/betic.png",
       link: "https://github.com/CanPacis/betic",
       tags: ["Experimental", "TypeScript"],
       actionLabel: "See the repo",
@@ -155,118 +155,25 @@ export function Showcase() {
       <Carousel
         data-non-drag-target
         sx={{ maxWidth: isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%" }}
+        styles={{ indicators: { bottom: 0 } }}
         withControls={false}
         withIndicators
-        height={600}
+        slideGap="xs"
       >
         {tabs.projects.map((project) => (
           <Carousel.Slide key={project.link}>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={project.image} height={280} alt={project.title} />
-              </Card.Section>
-
-              <Group position="apart" mt="md" mb="xs">
-                <Text weight={500}>{project.title}</Text>
-                <Group sx={(theme) => ({ gap: theme.spacing.xs })}>
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} color="pink" variant="light">
-                      {tag}
-                    </Badge>
-                  ))}
-                </Group>
-              </Group>
-
-              <Text size="sm" color="dimmed">
-                {project.description}
-              </Text>
-
-              <Link passHref href={project.link}>
-                <Button component="a" variant="light" color="blue" fullWidth mt="md" radius="md">
-                  {project.actionLabel}
-                </Button>
-              </Link>
-            </Card>
+            <ProjectCard project={project} />
           </Carousel.Slide>
         ))}
       </Carousel>
     ),
-    experiences: (
-      <Carousel
-        data-non-drag-target
-        sx={{ maxWidth: isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%" }}
-        withControls={false}
-        withIndicators
-        height={600}
-      >
-        {tabs.experiences.map((experience) => (
-          <Carousel.Slide key={experience.company}>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Group position="apart" mt="md" mb="xs">
-                <Text weight={500}>{experience.company}</Text>
-                <Group sx={(theme) => ({ gap: theme.spacing.xs })}>
-                  <Badge color="pink" variant="light">
-                    {experience.title}
-                  </Badge>
-                </Group>
-              </Group>
-              <Card.Section py="xs" px="lg">
-                <Text color="dimmed">
-                  Worked from{" "}
-                  <Mark py={5} px={2} sx={(theme) => ({ backgroundColor: theme.colors.yellow[1] })}>
-                    {formatDate(experience.from)}
-                  </Mark>
-                  {" "}to{" "}
-                  <Mark py={5} px={2} sx={(theme) => ({ backgroundColor: theme.colors.yellow[1] })}>
-                    {formatDate(experience.to)}
-                  </Mark>
-                </Text>
-              </Card.Section>
-
-              <Text size="sm" color="dimmed">
-                {experience.description}
-              </Text>
-            </Card>
-          </Carousel.Slide>
-        ))}
-      </Carousel>
-    ),
-    languages: (
-      <Carousel
-        data-non-drag-target
-        sx={{ maxWidth: isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%" }}
-        withControls={false}
-        withIndicators
-        height={600}
-      >
-        {tabs.languages.map((language) => (
-          <Carousel.Slide key={language.name}>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={language.image} height={280} alt={language.name} />
-              </Card.Section>
-
-              <Group position="apart" mt="md" mb="xs">
-                <Text weight={500}>{language.name}</Text>
-                <Group sx={(theme) => ({ gap: theme.spacing.xs })}>
-                  <Badge color="pink" variant="light">
-                    {language.level}
-                  </Badge>
-                </Group>
-              </Group>
-
-              <Text size="sm" color="dimmed">
-                {language.description}
-              </Text>
-            </Card>
-          </Carousel.Slide>
-        ))}
-      </Carousel>
-    ),
+    experiences: <div></div>,
+    languages: <div></div>,
   };
 
   return (
     <Group
+    mb="md"
       sx={{
         flex: 1,
         flexDirection: "column",
@@ -291,5 +198,44 @@ export function Showcase() {
 
       {views[tabValue]}
     </Group>
+  );
+}
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <Card sx={{ cursor: "pointer" }} mb="md" shadow="sm" p="lg" radius="sm">
+      <Card.Section inheritPadding py="xs">
+        <Group position="apart">
+          <Text weight={500}>{project.title}</Text>
+          <Group sx={(theme) => ({ gap: theme.spacing.xs })}>
+            {project.tags.map((tag) => (
+              <Badge styles={{ inner: { lineHeight: 13 } }} key={tag} color="pink" variant="light">
+                {tag}
+              </Badge>
+            ))}
+          </Group>
+        </Group>
+      </Card.Section>
+
+      <Card.Section>
+        <Divider />
+      </Card.Section>
+
+      <Text mt="sm" color="dimmed" size="sm">
+        {project.description}
+      </Text>
+
+      <Card.Section mt="sm">
+        <Image alt="project image" src={project.image} />
+      </Card.Section>
+
+      <Card.Section p="sm">
+        <Link passHref href={project.link}>
+          <Button component="a" variant="light" color="blue" fullWidth radius="md">
+            {project.actionLabel}
+          </Button>
+        </Link>
+      </Card.Section>
+    </Card>
   );
 }
