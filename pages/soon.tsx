@@ -50,6 +50,8 @@ const useStyles = createStyles((theme) => ({
 export default function Soon() {
   const { classes } = useStyles();
 
+  console.log(process.env.NEXT_PUBLIC_VERCEL_ENV)
+
   return (
     <div className={classes.root}>
       <Container>
