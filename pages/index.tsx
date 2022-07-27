@@ -12,7 +12,7 @@ import { useEffect } from "react";
 const Home: NextPage = () => {
   const isTablet = useMediaQuery(TABLET_SIZE);
   const router = useRouter();
-  const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === "production";
+  const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
 
   useEffect(() => {
     if (isProduction && typeof window !== "undefined") {
