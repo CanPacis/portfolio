@@ -4,15 +4,31 @@ import { Bubbles } from "../components/Bubbles";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 import { Showcase } from "../components/Showcase";
-import { useMediaQuery } from "@mantine/hooks";
+import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import { TABLET_SIZE } from "../store/responsiveStore";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { languageState } from "../store/content";
 
 const Home: NextPage = () => {
   const isTablet = useMediaQuery(TABLET_SIZE);
   const router = useRouter();
   const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+  const [language, setLanguage] = useRecoilState(languageState);
+  const [localLanguage, setLocalLanguage] = useLocalStorage({ key: "language", defaultValue: language });
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setLanguage(localLanguage);
+    setIsReady(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setLocalLanguage(language);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
   useEffect(() => {
     if (isProduction && typeof window !== "undefined") {
@@ -21,6 +37,14 @@ const Home: NextPage = () => {
   }, [router, isProduction]);
 
   if (isProduction) {
+    return (
+      <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
+        <Loader variant="bars" />
+      </Group>
+    );
+  }
+
+  if (!isReady) {
     return (
       <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
         <Loader variant="bars" />
