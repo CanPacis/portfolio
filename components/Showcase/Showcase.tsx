@@ -15,6 +15,8 @@ import {
   createStyles,
   UnstyledButton,
   ScrollArea,
+  Modal,
+  Tooltip,
 } from "@mantine/core";
 import { useListState, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
@@ -31,12 +33,14 @@ export function Showcase() {
   const isMobile = useMediaQuery(MOBILE_SIZE);
   const [tabValue, setTabValue] = useState("projects");
   const contentWidth = isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%";
-  const content = useContent()
-  const language = useRecoilValue(languageState)
+  const content = useContent();
+  const language = useRecoilValue(languageState);
+  const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const formatDate = (date: Date | null): string => {
     if (!date) {
-      return "Present";
+      return content.siteKeys.present;
     }
 
     return new Intl.DateTimeFormat(language, { month: "long", year: "numeric" }).format(date);
@@ -54,7 +58,13 @@ export function Showcase() {
       >
         {content.projects.map((project) => (
           <Carousel.Slide key={project.link}>
-            <ProjectCard project={project} />
+            <ProjectCard
+              onPreview={(image: string) => {
+                setImagePreviewOpen(true);
+                setSelectedImage(image);
+              }}
+              project={project}
+            />
           </Carousel.Slide>
         ))}
       </Carousel>
@@ -80,14 +90,7 @@ export function Showcase() {
               {experience.description}
             </Text>
             <Text size="sm" mt={4}>
-              From{" "}
-              <Text variant="link" component="span" inherit>
-                {formatDate(experience.from)}
-              </Text>{" "}
-              to{" "}
-              <Text variant="link" component="span" inherit>
-                {formatDate(experience.to)}
-              </Text>
+              {content.siteKeys.DateFormat(formatDate(experience.from), formatDate(experience.to))}
             </Text>
             <Text color="dimmed" size="sm">
               {experience.type}
@@ -99,7 +102,7 @@ export function Showcase() {
     languages: (
       <Group sx={{ flexDirection: "column" }}>
         <Text weight={500} color="dimmed">
-          Programming Languages
+          {content.siteKeys.programmingLanguages}
         </Text>
         <SimpleGrid cols={2} sx={{ width: "100%" }}>
           {content.languages
@@ -117,7 +120,7 @@ export function Showcase() {
             ))}
         </SimpleGrid>
         <Text weight={500} color="dimmed">
-          Spoken Languages
+          {content.siteKeys.spokenLanguages}
         </Text>
         <SimpleGrid cols={2} sx={{ width: "100%" }}>
           {content.languages
@@ -158,20 +161,35 @@ export function Showcase() {
         value={tabValue}
         onChange={setTabValue}
         data={[
-          { label: "Projects", value: "projects" },
-          { label: "Experience", value: "experiences" },
-          { label: "Languages", value: "languages" },
-          { label: "Tools", value: "tools" },
-          { label: "Skills", value: "skills" },
+          { label: content.siteKeys.projects, value: "projects" },
+          { label: content.siteKeys.experience, value: "experiences" },
+          { label: content.siteKeys.languages, value: "languages" },
+          { label: content.siteKeys.tools, value: "tools" },
+          { label: content.siteKeys.skills, value: "skills" },
         ]}
       />
 
+      <Modal
+        opened={imagePreviewOpen}
+        onClose={() => {
+          setImagePreviewOpen(false);
+          setSelectedImage(null);
+        }}
+        styles={{ modal: { padding: "0 !important" } }}
+        size={isMobile ? "100%" : "80%"}
+        withCloseButton={false}
+        centered
+      >
+        <Image alt="project image" src={selectedImage || ""} />
+      </Modal>
       {views[tabValue]}
     </Group>
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, onPreview }: { project: Project; onPreview: (image: string) => void }) {
+  const content = useContent();
+
   return (
     <Card sx={{ cursor: "pointer" }} mb="md" shadow="sm" p="lg" radius="md">
       <Card.Section inheritPadding py="xs">
@@ -195,8 +213,15 @@ function ProjectCard({ project }: { project: Project }) {
         {project.description}
       </Text>
 
-      <Card.Section mt="sm">
-        <Image alt="project image" src={project.image} />
+      <Card.Section
+        mt="sm"
+        onDoubleClick={() => {
+          onPreview(project.image);
+        }}
+      >
+        <Tooltip openDelay={1400} position="bottom" label={content.siteKeys.doubleClickToPreview}>
+          <Image alt="project image" src={project.image} />
+        </Tooltip>
       </Card.Section>
 
       <Card.Section p="sm">
@@ -345,7 +370,7 @@ const useSkillsStyles = createStyles((theme) => ({
 
 export function Skills({ contentWidth }: { contentWidth: string }) {
   const { classes, theme } = useSkillsStyles();
-  const content = useContent()
+  const content = useContent();
 
   const items = content.skills.map((item) => (
     <UnstyledButton key={item.name} className={classes.item}>
@@ -359,7 +384,7 @@ export function Skills({ contentWidth }: { contentWidth: string }) {
   return (
     <Card sx={{ width: contentWidth }} radius="md" className={classes.card}>
       <Group position="apart">
-        <Text className={classes.title}>My Main Skills</Text>
+        <Text className={classes.title}>{content.siteKeys.myMainSkills}</Text>
       </Group>
       <SimpleGrid cols={3} mt="md">
         {items}

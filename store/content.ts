@@ -13,6 +13,7 @@ import {
   Icon,
   Users,
 } from "tabler-icons-react";
+import { Text } from "@mantine/core";
 
 export interface Project {
   title: string;
@@ -71,6 +72,19 @@ export interface Content {
   experiences: Experience[];
   tools: Tool[];
   skills: Skill[];
+  siteKeys: {
+    doubleClickToPreview: string;
+    myMainSkills: string,
+    programmingLanguages: string;
+    spokenLanguages: string;
+    projects: string;
+    experience: string;
+    languages: string;
+    tools: string;
+    skills: string;
+    present: string;
+    DateFormat: (from: string, to: string) => JSX.Element;
+  };
 }
 
 export const enUS: Content = {
@@ -119,8 +133,18 @@ export const enUS: Content = {
       actionLabel: "See the docs",
     },
     {
+      title: "Sinope",
+      description:
+        "A simple integrated development environment for developing and transpiling nearley grammars. Developed with electron and Microsoft's monaco editor which is also used in VSCode.",
+      image: "/sinope.png",
+      link: "https://github.com/CanPacis/nearley-editor",
+      tags: ["Desktop App", "JavaScript", "React"],
+      actionLabel: "See the repo",
+    },
+    {
       title: "Birlang",
-      description: "Bir language where only one type exists.",
+      description:
+        "Bir language where only one type exists. It is a simple language with only one type that is integer. Along with a parser and an implementor engine, I also developed a VSCode plugin for syntax highlighting. It is entirely written in TypeScript and Deno while having no dependencies.",
       image: "/birlang.png",
       link: "https://github.com/CanPacis/bir",
       tags: ["Experimental", "TypeScript"],
@@ -128,7 +152,8 @@ export const enUS: Content = {
     },
     {
       title: "Birlang Go",
-      description: "Bir language where only one type exists. But written in Go.",
+      description:
+        "Bir language where only one type exists. But written in Go. Using the the same parser I implemented in in Typescript, this language is the exact same as the other one, but the implementor engine is written in Go and has few dependencies. It was a nice experiment to learn Golang and its struct and interfaces.",
       image: "birlang-go.png",
       link: "https://github.com/CanPacis/birlang",
       tags: ["Experimental", "Go"],
@@ -136,7 +161,8 @@ export const enUS: Content = {
     },
     {
       title: "Betic",
-      description: "Another programming language attempt",
+      description:
+        "Another programming language attempt of mine. Betic is one of my first attemps to create a programming language. It has a lot of design flaws as well as a lot of bugs. The lack of a callstack makes the language unusable but it taught me well. I also developed a VSCode plugin for syntax highlighting for this language.",
       image: "/betic.png",
       link: "https://github.com/CanPacis/betic",
       tags: ["Experimental", "TypeScript"],
@@ -145,9 +171,18 @@ export const enUS: Content = {
     {
       title: "Mantine",
       description:
-        "A fully featured React components library. Build fully functional accessible web applications faster than ever - Mantine includes more than 100 customizable components and 40 hooks to cover you in any situation",
+        "A fully featured React components library. Build fully functional accessible web applications faster than ever - Mantine includes more than 100 customizable components and 40 hooks to cover you in any situation. I basically made some small contributions.",
       image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png",
       link: "https://mantine.dev",
+      tags: ["Library", "Contribution"],
+      actionLabel: "See the website",
+    },
+    {
+      title: "Svelte UI",
+      description:
+        "Create applications in less time than ever before Regardless of design experience. I basically made some small contributions.",
+      image: "https://repository-images.githubusercontent.com/452020827/318011c9-76ce-419a-8d86-7f8f843e087f",
+      link: "https://www.svelteui.org/",
       tags: ["Library", "Contribution"],
       actionLabel: "See the website",
     },
@@ -348,18 +383,40 @@ export const enUS: Content = {
       color: "pink",
     },
   ],
+
+  siteKeys: {
+    doubleClickToPreview: "Double click to preview image",
+    myMainSkills: "My Main Skills",
+    programmingLanguages: "Programming Languages",
+    spokenLanguages: "Spoken Languages",
+    projects: "Projects",
+    experience: "Experience",
+    languages: "Languages",
+    tools: "Tools",
+    skills: "Skills",
+    present: "Present",
+    DateFormat: (from: string, to: string) => {
+      return React.createElement("span", null, [
+        "From ",
+        React.createElement(Text as React.ElementType<any>, { variant: "link", component: "span" }, [from]),
+        " to ",
+        React.createElement(Text as React.ElementType<any>, { variant: "link", component: "span" }, [to]),
+      ]);
+    },
+  },
 };
 
 export const tr: Content = {
   heroTitle: React.createElement(React.Fragment, {}, [
-    React.createElement("span", {}, "Hello There,"),
+    React.createElement("span", {}, "Merhabalar,"),
     React.createElement("br", {}),
-    React.createElement("span", {}, "This is"),
+    React.createElement("span", {}, "Ben"),
     React.createElement("br", {}),
     React.createElement("span", {}, "Muhammed Ali"),
   ]),
-  heroSubtitle: "whadup",
-  heroParagraph: "whadup",
+  heroSubtitle: "Web teknolojilerini kullanarak uygulamalar yazıyorum.",
+  heroParagraph:
+    "Kendi kendini yetiştirmiş ve meraklı bir yazılımcıyım. Sadece öğrenen değil, öğrenmeyi seven biriyim. Gitarı ve piyanoyu çalmayı kendi kendime öğrendim, neredeyse hiç yardım almadan İngilizce öğrendim ve en önemlisi, kendime yazılımı öğrettim. Hâlâ her alanda yeni şeyler öğrenmeye çalışıyor ve bilgiyi arıyorum.",
   contactList: [
     {
       label: "LinkedIn",
@@ -374,15 +431,202 @@ export const tr: Content = {
       icon: React.createElement(BrandStackoverflow),
     },
   ],
-  projects: [],
+  projects: [
+    {
+      title: "Kâşif",
+      description:
+        "Kâşif; Turkish noun Explorer, A person who travels to places where few people have been before or places that are unknown to them, in order to find out more about them. Kâşif is a web based file explorer designed for every platform. If done, all major operating systems and web will be supported.",
+      image: "/kasif.png",
+      link: "https://github.com/Kasif-The-Explorer/kasif-the-explorer",
+      tags: ["React", "Masaüstü Uygulaması"],
+      actionLabel: "Repo'yu incele",
+    },
+    {
+      title: "Affixi",
+      description:
+        "A helper library for Turkish noun suffixes written in typescript. Because Turkish is an agglutinative language and vowel harmony is a challenge, Affixi approaches the problem in a functional way and provides the primitives to create appropriate suffixes. An extensive documentation is available on the GitHub repository.",
+      image:
+        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+      link: "https://canpacis.github.io/affixi/",
+      tags: ["Kütüphane", "TypeScript"],
+      actionLabel: "Dokümantasyonu incele",
+    },
+    {
+      title: "Sinope",
+      description:
+        "A simple integrated development environment for developing and transpiling nearley grammars. Developed with electron and Microsoft's monaco editor which is also used in VSCode.",
+      image: "/sinope.png",
+      link: "https://github.com/CanPacis/nearley-editor",
+      tags: ["Masaüstü Uygulaması", "JavaScript"],
+      actionLabel: "Repo'yu incele",
+    },
+    {
+      title: "Birlang",
+      description:
+        "Bir language where only one type exists. It is a simple language with only one type that is integer. Along with a parser and an implementor engine, I also developed a VSCode plugin for syntax highlighting. It is entirely written in TypeScript and Deno while having no dependencies.",
+      image: "/birlang.png",
+      link: "https://github.com/CanPacis/bir",
+      tags: ["Deneysel", "TypeScript"],
+      actionLabel: "Repo'yu incele",
+    },
+    {
+      title: "Birlang Go",
+      description:
+        "Bir language where only one type exists. But written in Go. Using the the same parser I implemented in in Typescript, this language is the exact same as the other one, but the implementor engine is written in Go and has few dependencies. It was a nice experiment to learn Golang and its struct and interfaces.",
+      image: "birlang-go.png",
+      link: "https://github.com/CanPacis/birlang",
+      tags: ["Deneysel", "Go"],
+      actionLabel: "Repo'yu incele",
+    },
+    {
+      title: "Betic",
+      description:
+        "Another programming language attempt of mine. Betic is one of my first attemps to create a programming language. It has a lot of design flaws as well as a lot of bugs. The lack of a callstack makes the language unusable but it taught me well. I also developed a VSCode plugin for syntax highlighting for this language.",
+      image: "/betic.png",
+      link: "https://github.com/CanPacis/betic",
+      tags: ["Deneysel", "TypeScript"],
+      actionLabel: "Repo'yu incele",
+    },
+    {
+      title: "Mantine",
+      description:
+        "A fully featured React components library. Build fully functional accessible web applications faster than ever - Mantine includes more than 100 customizable components and 40 hooks to cover you in any situation. I basically made some small contributions.",
+      image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png",
+      link: "https://mantine.dev",
+      tags: ["Kütüphane", "Katkı"],
+      actionLabel: "Websitesini incele",
+    },
+    {
+      title: "Svelte UI",
+      description:
+        "Create applications in less time than ever before Regardless of design experience. I basically made some small contributions.",
+      image: "https://repository-images.githubusercontent.com/452020827/318011c9-76ce-419a-8d86-7f8f843e087f",
+      link: "https://www.svelteui.org/",
+      tags: ["Kütüphane", "Katkı"],
+      actionLabel: "Websitesini incele",
+    },
+  ],
 
-  experiences: [],
+  experiences: [
+    {
+      company: "Çeşitli",
+      title: "Freelance Geliştirici",
+      type: "Kontratlı",
+      description: "Küçük işletmeler için web siteleri geliştirdim ve deploy işlemlerini yaptım.",
+      image:
+        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+      from: new Date(2020, 0, 1),
+      to: new Date(2021, 1, 1),
+    },
+    {
+      company: "Viavis",
+      title: "Arayüz Geliştiricisi",
+      type: "Tam zamanlı",
+      description:
+        "Kurumsal seviyedeki web uygulamalarının geliştirmesini ve refaktör işlemlerini yaptım, eski teknolojilerden yeni teknolojilere migration işlerini sürdürdüm ve power user ve admin araç gereçlerini geliştirdim.",
+      image:
+        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+      from: new Date(2021, 1, 1),
+      to: new Date(2022, 7, 1),
+    },
+    {
+      company: "Macellan",
+      title: "Kıdemli Arayüz Geliştiricisi",
+      type: "Tam zamanlı",
+      description:
+        "Ürünlerin kurumsal web sitelerini geliştiriyor ve şirkette kullanılan araçların geliştirilmesini izliyorum.",
+      image:
+        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+      from: new Date(2022, 7, 1),
+      to: null,
+    },
+  ],
 
-  languages: [],
+  languages: [
+    {
+      color: "orange",
+      type: "programming",
+      name: "JavaScript",
+      level: 6,
+      description: "Uzman",
+    },
+    {
+      color: "orange",
+      type: "programming",
+      name: "TypeScript",
+      level: 6,
+      description: "Uzman",
+    },
+    { color: "orange", type: "programming", name: "Go", level: 3, description: "Deneyimli" },
+    { color: "orange", type: "programming", name: "Dart", level: 1, description: "Çırak" },
+    { color: "orange", type: "programming", name: "Rust", level: 0, description: "Çırak" },
+    { color: "teal", type: "spoken", name: "Türkçe", level: 6, description: "Anadil" },
+    { color: "teal", type: "spoken", name: "İngilizce", level: 6, description: "C2" },
+    { color: "teal", type: "spoken", name: "Fransızca", level: 1, description: "A1" },
+    { color: "teal", type: "spoken", name: "İsveççe", level: 1, description: "A1" },
+  ],
 
-  tools: [],
+  tools: enUS.tools,
 
-  skills: [],
+  skills: [
+    {
+      name: "Performans Optimizasyonu",
+      icon: Speedboat,
+      description: "",
+      color: "violet",
+    },
+    {
+      name: "Hata Ayıklama",
+      icon: Bug,
+      description: "",
+      color: "indigo",
+    },
+    {
+      name: "Analitik Düşünce",
+      icon: ReportAnalytics,
+      description: "",
+      color: "orange",
+    },
+    {
+      name: "Takım Oyuncusu",
+      icon: Users,
+      description: "",
+      color: "red",
+    },
+    {
+      name: "Yazılım Tasarımı ve Mimarisi",
+      icon: BuildingBridge,
+      description: "",
+      color: "teal",
+    },
+    {
+      name: "Scripting",
+      icon: Code,
+      description: "",
+      color: "pink",
+    },
+  ],
+
+  siteKeys: {
+    doubleClickToPreview: "Resmi önizlemek için çift tıklayın",
+    myMainSkills: "Başlıca Yeteneklerim",
+    programmingLanguages: "Yazılım Dilleri",
+    spokenLanguages: "Konuşulan Diller",
+    projects: "Projeler",
+    experience: "Deneyim",
+    languages: "Diller",
+    tools: "Araçlar",
+    skills: "Yetenekler",
+    present: "Günümüz",
+    DateFormat: (from: string, to: string) => {
+      return React.createElement("span", null, [
+        React.createElement(Text as React.ElementType<any>, { variant: "link", component: "span" }, [from]),
+        " ve ",
+        React.createElement(Text as React.ElementType<any>, { variant: "link", component: "span" }, [to]),
+        " arası",
+      ]);
+    },
+  },
 };
 
 export function getContent(language: string): Content {
