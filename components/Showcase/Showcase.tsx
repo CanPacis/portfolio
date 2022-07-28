@@ -14,13 +14,14 @@ import {
   SimpleGrid,
   createStyles,
   UnstyledButton,
+  ScrollArea,
 } from "@mantine/core";
 import { useListState, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import { useState } from "react";
-import content, { Project, Tool } from "../../store/content";
 import { TABLET_SIZE, MOBILE_SIZE, DESKTOP_SIZE } from "../../store/responsiveStore";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import content, { Project, Tool } from "../../store/content";
 
 export function Showcase() {
   const isDesktop = useMediaQuery(DESKTOP_SIZE);
@@ -275,7 +276,6 @@ export function DndList({ data, contentWidth }: { data: Tool[]; contentWidth: st
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {/* <Text className={classes.symbol}>{item.logo}</Text> */}
           <i className={`devicon-${item.logo}`}></i>
           <div>
             <Text>{item.name}</Text>
@@ -289,18 +289,25 @@ export function DndList({ data, contentWidth }: { data: Tool[]; contentWidth: st
   ));
 
   return (
-    <DragDropContext
-      onDragEnd={({ destination, source }) => handlers.reorder({ from: source.index, to: destination?.index || 0 })}
-    >
-      <Droppable droppableId="dnd-list" direction="vertical">
-        {(provided) => (
-          <Group data-non-drag-target {...provided.droppableProps} sx={{ width: contentWidth, gap: 0, "& > *": { width: "100%" } }} ref={provided.innerRef}>
-            {items}
-            {provided.placeholder}
-          </Group>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <ScrollArea sx={{ height: 500, width: contentWidth }}>
+      <DragDropContext
+        onDragEnd={({ destination, source }) => handlers.reorder({ from: source.index, to: destination?.index || 0 })}
+      >
+        <Droppable droppableId="dnd-list" direction="vertical">
+          {(provided) => (
+            <Group
+              data-non-drag-target
+              {...provided.droppableProps}
+              sx={{ gap: 0, "& > *": { width: "100%" } }}
+              ref={provided.innerRef}
+            >
+              {items}
+              {provided.placeholder}
+            </Group>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </ScrollArea>
   );
 }
 

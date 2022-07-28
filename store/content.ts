@@ -221,6 +221,11 @@ const content: Content = {
       description: "Build cross-platform desktop apps with web technologies",
     },
     {
+      name: "Next.js",
+      logo: "nextjs-original",
+      description: "The React Framework for Production",
+    },
+    {
       name: "NodeJS",
       logo: "nodejs-plain",
       description: "A JavaScript runtime built on V8 engine",
@@ -231,14 +236,69 @@ const content: Content = {
       description: "Build faster. Build smarter.",
     },
     {
+      name: "Git",
+      logo: "git-plain",
+      description: "--distributed-is-the-new-centralized",
+    },
+    {
+      name: "Github",
+      logo: "github-original",
+      description: "The complete developer platform to build, scale, and deliver secure software.",
+    },
+    {
+      name: "Bitbucket",
+      logo: "bitbucket-original",
+      description: "Code & CI/CD, optimized for teams using Jira",
+    },
+    {
       name: "Socket.io",
       logo: "socketio-original",
       description: "Bidirectional and low-latency communication for every platform",
     },
     {
+      name: "Firebase",
+      logo: "firebase-plain",
+      description: "Make your app the best it can be",
+    },
+    {
       name: "Deno",
       logo: "denojs-original",
       description: "A modern runtime for JavaScript and TypeScript",
+    },
+    {
+      name: "Express",
+      logo: "express-original",
+      description: "Fast, unopinionated, minimalist web framework for Node.js",
+    },
+    {
+      name: "Material-UI",
+      logo: "materialui-plain",
+      description: "Move faster with intuitive React UI tools",
+    },
+    {
+      name: "VSCode",
+      logo: "vscode-plain",
+      description: "Code editing. Redefined.",
+    },
+    {
+      name: "Yarn",
+      logo: "yarn-plain-wordmark",
+      description: "Safe, stable, reproducible projects",
+    },
+    {
+      name: "npm",
+      logo: "npm-original-wordmark",
+      description: "Take your JavaScript development up a notch",
+    },
+    {
+      name: "Markdown",
+      logo: "markdown-original",
+      description: "Lightweight markup language for creating formatted text",
+    },
+    {
+      name: "Flutter",
+      logo: "flutter-plain",
+      description: "Build apps for any screen",
     },
   ],
 
