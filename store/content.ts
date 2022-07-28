@@ -117,7 +117,7 @@ export const enUS: Content = {
       title: "Kâşif",
       description:
         "Kâşif; Turkish noun Explorer, A person who travels to places where few people have been before or places that are unknown to them, in order to find out more about them. Kâşif is a web based file explorer designed for every platform. If done, all major operating systems and web will be supported.",
-      image: "/kasif.png",
+      image: "/kasif.webp",
       link: "https://github.com/Kasif-The-Explorer/kasif-the-explorer",
       tags: ["React", "Desktop App"],
       actionLabel: "See the repo",
@@ -136,7 +136,7 @@ export const enUS: Content = {
       title: "Sinope",
       description:
         "A simple integrated development environment for developing and transpiling nearley grammars. Developed with electron and Microsoft's monaco editor which is also used in VSCode.",
-      image: "/sinope.png",
+      image: "/sinope.webp",
       link: "https://github.com/CanPacis/nearley-editor",
       tags: ["Desktop App", "JavaScript", "React"],
       actionLabel: "See the repo",
@@ -145,7 +145,7 @@ export const enUS: Content = {
       title: "Birlang",
       description:
         "Bir language where only one type exists. It is a simple language with only one type that is integer. Along with a parser and an implementor engine, I also developed a VSCode plugin for syntax highlighting. It is entirely written in TypeScript and Deno while having no dependencies.",
-      image: "/birlang.png",
+      image: "/birlang.webp",
       link: "https://github.com/CanPacis/bir",
       tags: ["Experimental", "TypeScript"],
       actionLabel: "See the repo",
@@ -154,7 +154,7 @@ export const enUS: Content = {
       title: "Birlang Go",
       description:
         "Bir language where only one type exists. But written in Go. Using the the same parser I implemented in in Typescript, this language is the exact same as the other one, but the implementor engine is written in Go and has few dependencies. It was a nice experiment to learn Golang and its struct and interfaces.",
-      image: "birlang-go.png",
+      image: "birlang-go.webp",
       link: "https://github.com/CanPacis/birlang",
       tags: ["Experimental", "Go"],
       actionLabel: "See the repo",
@@ -163,7 +163,7 @@ export const enUS: Content = {
       title: "Betic",
       description:
         "Another programming language attempt of mine. Betic is one of my first attemps to create a programming language. It has a lot of design flaws as well as a lot of bugs. The lack of a callstack makes the language unusable but it taught me well. I also developed a VSCode plugin for syntax highlighting for this language.",
-      image: "/betic.png",
+      image: "/betic.webp",
       link: "https://github.com/CanPacis/betic",
       tags: ["Experimental", "TypeScript"],
       actionLabel: "See the repo",
@@ -181,7 +181,7 @@ export const enUS: Content = {
       title: "Svelte UI",
       description:
         "Create applications in less time than ever before Regardless of design experience. I basically made some small contributions.",
-      image: "https://repository-images.githubusercontent.com/452020827/318011c9-76ce-419a-8d86-7f8f843e087f",
+      image: "/svelte-ui.webp",
       link: "https://www.svelteui.org/",
       tags: ["Library", "Contribution"],
       actionLabel: "See the website",
@@ -436,7 +436,7 @@ export const tr: Content = {
       title: "Kâşif",
       description:
         "Kâşif; Turkish noun Explorer, A person who travels to places where few people have been before or places that are unknown to them, in order to find out more about them. Kâşif is a web based file explorer designed for every platform. If done, all major operating systems and web will be supported.",
-      image: "/kasif.png",
+      image: "/kasif.webp",
       link: "https://github.com/Kasif-The-Explorer/kasif-the-explorer",
       tags: ["React", "Masaüstü Uygulaması"],
       actionLabel: "Repo'yu incele",
@@ -455,7 +455,7 @@ export const tr: Content = {
       title: "Sinope",
       description:
         "A simple integrated development environment for developing and transpiling nearley grammars. Developed with electron and Microsoft's monaco editor which is also used in VSCode.",
-      image: "/sinope.png",
+      image: "/sinope.webp",
       link: "https://github.com/CanPacis/nearley-editor",
       tags: ["Masaüstü Uygulaması", "JavaScript"],
       actionLabel: "Repo'yu incele",
@@ -464,7 +464,7 @@ export const tr: Content = {
       title: "Birlang",
       description:
         "Bir language where only one type exists. It is a simple language with only one type that is integer. Along with a parser and an implementor engine, I also developed a VSCode plugin for syntax highlighting. It is entirely written in TypeScript and Deno while having no dependencies.",
-      image: "/birlang.png",
+      image: "/birlang.webp",
       link: "https://github.com/CanPacis/bir",
       tags: ["Deneysel", "TypeScript"],
       actionLabel: "Repo'yu incele",
@@ -473,7 +473,7 @@ export const tr: Content = {
       title: "Birlang Go",
       description:
         "Bir language where only one type exists. But written in Go. Using the the same parser I implemented in in Typescript, this language is the exact same as the other one, but the implementor engine is written in Go and has few dependencies. It was a nice experiment to learn Golang and its struct and interfaces.",
-      image: "birlang-go.png",
+      image: "birlang-go.webp",
       link: "https://github.com/CanPacis/birlang",
       tags: ["Deneysel", "Go"],
       actionLabel: "Repo'yu incele",
@@ -482,7 +482,7 @@ export const tr: Content = {
       title: "Betic",
       description:
         "Another programming language attempt of mine. Betic is one of my first attemps to create a programming language. It has a lot of design flaws as well as a lot of bugs. The lack of a callstack makes the language unusable but it taught me well. I also developed a VSCode plugin for syntax highlighting for this language.",
-      image: "/betic.png",
+      image: "/betic.webp",
       link: "https://github.com/CanPacis/betic",
       tags: ["Deneysel", "TypeScript"],
       actionLabel: "Repo'yu incele",
@@ -500,7 +500,7 @@ export const tr: Content = {
       title: "Svelte UI",
       description:
         "Create applications in less time than ever before Regardless of design experience. I basically made some small contributions.",
-      image: "https://repository-images.githubusercontent.com/452020827/318011c9-76ce-419a-8d86-7f8f843e087f",
+      image: "/svelte-ui.webp",
       link: "https://www.svelteui.org/",
       tags: ["Kütüphane", "Katkı"],
       actionLabel: "Websitesini incele",
