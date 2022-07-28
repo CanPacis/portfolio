@@ -1,0 +1,12 @@
+:root {
+  --footer-height: 60px
+}
+
+body {
+  background-color: #1D1E2C !important;
+}
+
+i[class^="devicon-"] {
+  font-size: 24px;
+  margin-right: 16px;
+}

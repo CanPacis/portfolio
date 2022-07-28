@@ -31,9 +31,9 @@ const Home: NextPage = () => {
   return (
     <div>
       <Bubbles />
-      <Group sx={(theme) => ({ gap: theme.spacing.lg })}>
+      <Group sx={(theme) => ({ gap: theme.spacing.lg, height: "100%" })}>
         <ScrollArea
-          sx={{ height: "100vh", overflowX: "hidden" }}
+          sx={{ height: "calc(100vh - var(--footer-height))", overflowX: "hidden" }}
           styles={{
             viewport: {
               "& > div": {
