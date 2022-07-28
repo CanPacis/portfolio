@@ -1,4 +1,9 @@
-import { createStyles, Container, Text } from "@mantine/core";
+import { createStyles, Text, Group, Select } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { useRecoilState } from "recoil";
+import { useEnvironment } from "../../hooks/useEnvironment";
+import { languageState } from "../../store/content";
+import { MOBILE_SIZE } from "../../store/responsiveStore";
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -17,12 +22,30 @@ const useStyles = createStyles((theme) => ({
 
 export function Footer() {
   const { classes } = useStyles();
+  const environment = useEnvironment();
+  const isMobile = useMediaQuery(MOBILE_SIZE);
+  const [language, setLanguage] = useRecoilState(languageState);
 
   return (
     <div className={classes.footer}>
-      <Container className={classes.inner}>
-        <Text size="sm" color="dimmed">Muhammed Ali CAN - 2022</Text>
-      </Container>
+      <Group px={isMobile ? 10 : 60} align="center" sx={{ height: "100%", justifyContent: "space-between" }}>
+        {environment !== "production" && (
+          <Select
+            data-non-drag-target
+            value={language}
+            onChange={(value) => setLanguage(value || "en-US")}
+            placeholder="Language"
+            data={[
+              { value: "en-US", label: "English" },
+              { value: "tr", label: "Turkish" },
+            ]}
+            sx={{ maxWidth: 180 }}
+          />
+        )}
+        <Text size="xs" color="dimmed">
+          Muhammed Ali CAN - 2022
+        </Text>
+      </Group>
     </div>
   );
 }

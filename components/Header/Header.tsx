@@ -6,12 +6,13 @@ import { useRecoilValue } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
 import { useMediaQuery } from "@mantine/hooks";
 import { TABLET_SIZE, MOBILE_SIZE } from "../../store/responsiveStore";
-import content from "../../store/content";
+import { useContent } from "../../hooks/useContent";
 
 export function Header() {
   const selected = useRecoilValue(selectionStore);
   const isTablet = useMediaQuery(TABLET_SIZE);
   const isMobile = useMediaQuery(MOBILE_SIZE);
+  const content = useContent()
 
   return (
     <header className={!isTablet ? classes.headerDesktop : classes.headerMobile}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { atom } from "recoil";
 import {
   BrandLinkedin,
   BrandGithub,
@@ -61,7 +62,7 @@ export interface ContactItem {
 }
 
 export interface Content {
-  heroTitle: string;
+  heroTitle: React.ReactNode;
   heroSubtitle: string;
   heroParagraph: string;
   contactList: ContactItem[];
@@ -72,10 +73,17 @@ export interface Content {
   skills: Skill[];
 }
 
-const content: Content = {
-  heroTitle: "The Hero",
-  heroSubtitle: "The Subtitle",
-  heroParagraph: "The Paragraph",
+export const enUS: Content = {
+  heroTitle: React.createElement(React.Fragment, {}, [
+    React.createElement("span", {}, "Hello There,"),
+    React.createElement("br", {}),
+    React.createElement("span", {}, "This is"),
+    React.createElement("br", {}),
+    React.createElement("span", {}, "Muhammed Ali"),
+  ]),
+  heroSubtitle: "I build stuff with web technologies.",
+  heroParagraph:
+    "I am a self-taught programmer with immense curiosity, not only a learner but also a lover of learning. I taught myself playing the guitar and the piano, I learned English almost all on my own and I taught myself programming. I still seek knowledge and try to learn new stuff in every front.",
   contactList: [
     {
       label: "LinkedIn",
@@ -165,7 +173,7 @@ const content: Content = {
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
       from: new Date(2021, 1, 1),
-      to: new Date(2022, 6, 1),
+      to: new Date(2022, 7, 1),
     },
     {
       company: "Macellan",
@@ -175,7 +183,7 @@ const content: Content = {
         "I am building the company's main website and oversee the development of the company's internal tools.",
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-      from: new Date(2022, 6, 1),
+      from: new Date(2022, 7, 1),
       to: null,
     },
   ],
@@ -342,4 +350,53 @@ const content: Content = {
   ],
 };
 
-export default content;
+export const tr: Content = {
+  heroTitle: React.createElement(React.Fragment, {}, [
+    React.createElement("span", {}, "Hello There,"),
+    React.createElement("br", {}),
+    React.createElement("span", {}, "This is"),
+    React.createElement("br", {}),
+    React.createElement("span", {}, "Muhammed Ali"),
+  ]),
+  heroSubtitle: "whadup",
+  heroParagraph: "whadup",
+  contactList: [
+    {
+      label: "LinkedIn",
+      url: "https://www.linkedin.com/in/muhammed-ali-can-45761a206/",
+      icon: React.createElement(BrandLinkedin),
+    },
+    { label: "Github", url: "https://github.com/CanPacis/", icon: React.createElement(BrandGithub) },
+    { label: "Discord", url: "https://discordapp.com/users/0944/", icon: React.createElement(BrandDiscord) },
+    {
+      label: "Stackoverflow",
+      url: "https://stackoverflow.com/users/12360941/can-pacis/",
+      icon: React.createElement(BrandStackoverflow),
+    },
+  ],
+  projects: [],
+
+  experiences: [],
+
+  languages: [],
+
+  tools: [],
+
+  skills: [],
+};
+
+export function getContent(language: string): Content {
+  switch (language) {
+    case "en-US":
+      return enUS;
+    case "tr":
+      return tr;
+    default:
+      return enUS;
+  }
+}
+
+export const languageState = atom({
+  key: "languageState",
+  default: "en-US",
+});

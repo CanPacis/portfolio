@@ -1,6 +1,7 @@
 import { Group, Title, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRecoilValue } from "recoil";
+import { useContent } from "../../hooks/useContent";
 import { TABLET_SIZE, MOBILE_SIZE } from "../../store/responsiveStore";
 import { selectionStore } from "../../store/selectionStore";
 
@@ -8,6 +9,7 @@ export function Hero() {
   const selected = useRecoilValue(selectionStore);
   const isTablet = useMediaQuery(TABLET_SIZE);
   const isMobile = useMediaQuery(MOBILE_SIZE);
+  const content = useContent()
 
   return (
     <Group
@@ -35,11 +37,7 @@ export function Hero() {
             borderRadius: theme.radius.sm,
           })}
         >
-          Hello There,
-          <br />
-          This is
-          <br />
-          Muhammed Ali.
+          {content.heroTitle}
         </Title>
         <Title
           order={1}
@@ -54,11 +52,7 @@ export function Hero() {
             fontFamily: "Comfortaa",
           })}
         >
-          Hello There,
-          <br />
-          This is
-          <br />
-          Muhammed Ali.
+          {content.heroTitle}
         </Title>
       </Group>
       <Title
@@ -76,7 +70,7 @@ export function Hero() {
           borderRadius: theme.radius.sm,
         })}
       >
-        I build stuff with web technologies.
+        {content.heroSubtitle}
       </Title>
       <Text
         p="xs"
@@ -88,9 +82,7 @@ export function Hero() {
           borderRadius: theme.radius.sm,
         })}
       >
-        I am a self-taught programmer with immense curiosity, not only a learner but also a lover of learning. I taught
-        myself playing the guitar and the piano, I learned English almost all on my own and I taught myself programming.
-        I still seek knowledge and try to learn new stuff in every front.
+        {content.heroParagraph}
       </Text>
     </Group>
   );

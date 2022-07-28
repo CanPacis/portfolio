@@ -21,7 +21,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { TABLET_SIZE, MOBILE_SIZE, DESKTOP_SIZE } from "../../store/responsiveStore";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import content, { Project, Tool } from "../../store/content";
+import { languageState, Project, Tool } from "../../store/content";
+import { useContent } from "../../hooks/useContent";
+import { useRecoilValue } from "recoil";
 
 export function Showcase() {
   const isDesktop = useMediaQuery(DESKTOP_SIZE);
@@ -29,13 +31,15 @@ export function Showcase() {
   const isMobile = useMediaQuery(MOBILE_SIZE);
   const [tabValue, setTabValue] = useState("projects");
   const contentWidth = isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%";
+  const content = useContent()
+  const language = useRecoilValue(languageState)
 
   const formatDate = (date: Date | null): string => {
     if (!date) {
       return "Present";
     }
 
-    return new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(date);
+    return new Intl.DateTimeFormat(language, { month: "long", year: "numeric" }).format(date);
   };
 
   const views: { [key: string]: JSX.Element } = {
@@ -341,6 +345,7 @@ const useSkillsStyles = createStyles((theme) => ({
 
 export function Skills({ contentWidth }: { contentWidth: string }) {
   const { classes, theme } = useSkillsStyles();
+  const content = useContent()
 
   const items = content.skills.map((item) => (
     <UnstyledButton key={item.name} className={classes.item}>
