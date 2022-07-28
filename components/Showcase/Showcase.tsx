@@ -269,6 +269,7 @@ export function DndList({ data, contentWidth }: { data: Tool[]; contentWidth: st
     <Draggable key={item.name} index={index} draggableId={item.logo}>
       {(provided, snapshot) => (
         <div
+          data-non-drag-target
           className={cx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -293,7 +294,7 @@ export function DndList({ data, contentWidth }: { data: Tool[]; contentWidth: st
     >
       <Droppable droppableId="dnd-list" direction="vertical">
         {(provided) => (
-          <Group {...provided.droppableProps} sx={{ width: contentWidth, gap: 0, "& > *": { width: "100%" } }} ref={provided.innerRef}>
+          <Group data-non-drag-target {...provided.droppableProps} sx={{ width: contentWidth, gap: 0, "& > *": { width: "100%" } }} ref={provided.innerRef}>
             {items}
             {provided.placeholder}
           </Group>
@@ -337,7 +338,7 @@ export function Skills({ contentWidth }: { contentWidth: string }) {
   const items = content.skills.map((item) => (
     <UnstyledButton key={item.name} className={classes.item}>
       <item.icon color={theme.colors[item.color][6]} size={32} />
-      <Text size="xs" mt={7}>
+      <Text size={10} mt={7}>
         {item.name}
       </Text>
     </UnstyledButton>
