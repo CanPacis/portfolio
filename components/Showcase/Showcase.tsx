@@ -1,8 +1,24 @@
 import { Carousel } from "@mantine/carousel";
-import { Badge, Divider, Button, Card, Group, SegmentedControl, Text, Image, Mark } from "@mantine/core";
+import {
+  Badge,
+  Divider,
+  Button,
+  Card,
+  Group,
+  SegmentedControl,
+  Text,
+  Image,
+  Mark,
+  Timeline,
+  Center,
+  Paper,
+  RingProgress,
+  SimpleGrid,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import { useState } from "react";
+import { GitBranch, GitCommit, GitPullRequest, MessageDots } from "tabler-icons-react";
 import { TABLET_SIZE, MOBILE_SIZE, DESKTOP_SIZE } from "../../store/responsiveStore";
 
 interface Project {
@@ -14,10 +30,11 @@ interface Project {
   actionLabel: string;
 }
 
-interface Expreience {
+interface Experience {
   company: string;
   title: string;
   description: string;
+  type: string;
   image: string;
   from: Date;
   to: Date | null;
@@ -25,9 +42,11 @@ interface Expreience {
 
 interface Language {
   name: string;
-  level: string;
+  level: number;
   description: string;
   image: string;
+  type: "programming" | "spoken";
+  color: string;
 }
 
 interface Skill {
@@ -36,7 +55,7 @@ interface Skill {
   description: string;
 }
 
-const tabs: { projects: Project[]; languages: Language[]; experiences: Expreience[] } = {
+const tabs: { projects: Project[]; languages: Language[]; experiences: Experience[] } = {
   projects: [
     {
       title: "Kâşif",
@@ -49,7 +68,8 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     },
     {
       title: "Affixi",
-      description: "A helper library for Turkish noun suffixes written in typescript.",
+      description:
+        "A helper library for Turkish noun suffixes written in typescript. Because Turkish is an agglutinative language and vowel harmony is a challenge, Affixi approaches the problem in a functional way and provides the primitives to create appropriate suffixes. An extensive documentation is available on the GitHub repository.",
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
       link: "https://canpacis.github.io/affixi/",
@@ -59,8 +79,7 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     {
       title: "Birlang",
       description: "Bir language where only one type exists.",
-      image:
-        "/birlang.png",
+      image: "/birlang.png",
       link: "https://github.com/CanPacis/bir",
       tags: ["Experimental", "TypeScript"],
       actionLabel: "See the repo",
@@ -68,8 +87,7 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     {
       title: "Birlang Go",
       description: "Bir language where only one type exists. But written in Go.",
-      image:
-        "birlang-go.png",
+      image: "birlang-go.png",
       link: "https://github.com/CanPacis/birlang",
       tags: ["Experimental", "Go"],
       actionLabel: "See the repo",
@@ -77,8 +95,7 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     {
       title: "Betic",
       description: "Another programming language attempt",
-      image:
-        "/betic.png",
+      image: "/betic.png",
       link: "https://github.com/CanPacis/betic",
       tags: ["Experimental", "TypeScript"],
       actionLabel: "See the repo",
@@ -98,7 +115,8 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     {
       company: "Various",
       title: "Freelance Developer",
-      description: "",
+      type: "Contracted",
+      description: "I created small websites for small businesses and deployed them.",
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
       from: new Date(2020, 0, 1),
@@ -107,7 +125,9 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     {
       company: "Viavis",
       title: "Frontend Developer",
-      description: "",
+      type: "Full-time",
+      description:
+        "I built and refactored large webapp architectures, migrated from old technologies to new ones and built admin and power user tools for the company.",
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
       from: new Date(2021, 1, 1),
@@ -116,7 +136,9 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
     {
       company: "Macellan",
       title: "Senior Frontend Developer",
-      description: "",
+      type: "Full-time",
+      description:
+        "I am building the company's main website and oversaw the development of the company's internal tools.",
       image:
         "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
       from: new Date(2022, 6, 1),
@@ -125,14 +147,28 @@ const tabs: { projects: Project[]; languages: Language[]; experiences: Expreienc
   ],
 
   languages: [
-    { name: "JavaScript", level: "Expert", description: "Expert", image: "/javascript.png" },
-    { name: "TypeScript", level: "Expert", description: "Expert", image: "/typescript.png" },
-    { name: "Go", level: "Experienced", description: "Expert", image: "/golang.webp" },
-    { name: "Dart", level: "Beginner", description: "Expert", image: "/dart.png" },
-    { name: "Turkish", level: "Native", description: "Native", image: "/turkey.jpg" },
-    { name: "English", level: "Native", description: "Native", image: "/england.jpg" },
-    { name: "French", level: "A1", description: "A1", image: "/france.jpg" },
-    { name: "Swedish", level: "A1", description: "A1", image: "/sweden.webp" },
+    {
+      color: "orange",
+      type: "programming",
+      name: "JavaScript",
+      level: 6,
+      description: "Expert",
+      image: "/javascript.png",
+    },
+    {
+      color: "orange",
+      type: "programming",
+      name: "TypeScript",
+      level: 6,
+      description: "Expert",
+      image: "/typescript.png",
+    },
+    { color: "orange", type: "programming", name: "Go", level: 3, description: "Experienced", image: "/golang.webp" },
+    { color: "orange", type: "programming", name: "Dart", level: 1, description: "Beginner", image: "/dart.png" },
+    { color: "teal", type: "spoken", name: "Turkish", level: 6, description: "Native", image: "/turkey.jpg" },
+    { color: "teal", type: "spoken", name: "English", level: 6, description: "C2", image: "/england.jpg" },
+    { color: "teal", type: "spoken", name: "French", level: 1, description: "A1", image: "/france.jpg" },
+    { color: "teal", type: "spoken", name: "Swedish", level: 1, description: "A1", image: "/sweden.webp" },
   ],
 };
 
@@ -141,6 +177,7 @@ export function Showcase() {
   const isTablet = useMediaQuery(TABLET_SIZE);
   const isMobile = useMediaQuery(MOBILE_SIZE);
   const [tabValue, setTabValue] = useState("projects");
+  const contentWidth = isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%";
 
   const formatDate = (date: Date | null): string => {
     if (!date) {
@@ -154,7 +191,7 @@ export function Showcase() {
     projects: (
       <Carousel
         data-non-drag-target
-        sx={{ maxWidth: isMobile ? "100%" : isTablet ? "60%" : isDesktop ? "90%" : "60%" }}
+        sx={{ maxWidth: contentWidth }}
         styles={{ indicators: { bottom: 0 } }}
         withControls={false}
         withIndicators
@@ -167,13 +204,89 @@ export function Showcase() {
         ))}
       </Carousel>
     ),
-    experiences: <div></div>,
-    languages: <div></div>,
+    experiences: (
+      <Timeline lineWidth={3} active={tabs.experiences.length - 1} bulletSize={20} sx={{ maxWidth: contentWidth }}>
+        {tabs.experiences.map((experience, i) => (
+          <Timeline.Item
+            lineVariant={i === tabs.experiences.length - 2 ? "dashed" : "solid"}
+            key={experience.company}
+            title={
+              <>
+                <Text size="lg" component="span">
+                  {experience.title}
+                </Text>{" "}
+                <Text size="md" color="dimmed" component="span">
+                  @ {experience.company}
+                </Text>
+              </>
+            }
+          >
+            <Text color="dimmed" size="md">
+              {experience.description}
+            </Text>
+            <Text size="sm" mt={4}>
+              From{" "}
+              <Text variant="link" component="span" inherit>
+                {formatDate(experience.from)}
+              </Text>{" "}
+              to{" "}
+              <Text variant="link" component="span" inherit>
+                {formatDate(experience.to)}
+              </Text>
+            </Text>
+            <Text color="dimmed" size="sm">
+              {experience.type}
+            </Text>
+          </Timeline.Item>
+        ))}
+      </Timeline>
+    ),
+    languages: (
+      <Group sx={{ flexDirection: "column" }}>
+        <Text weight={500} color="dimmed">
+          Programming Languages
+        </Text>
+        <SimpleGrid cols={2} sx={{ width: "100%" }}>
+          {tabs.languages
+            .filter((language) => language.type === "programming")
+            .map((language) => (
+              <StatsRing
+                key={language.name}
+                stat={{
+                  label: language.description,
+                  stats: language.name,
+                  progress: language.level,
+                  color: language.color,
+                }}
+              />
+            ))}
+        </SimpleGrid>
+        <Text weight={500} color="dimmed">
+          Spoken Languages
+        </Text>
+        <SimpleGrid cols={2} sx={{ width: "100%" }}>
+          {tabs.languages
+            .filter((language) => language.type === "spoken")
+            .map((language) => (
+              <StatsRing
+                key={language.name}
+                stat={{
+                  label: language.description,
+                  stats: language.name,
+                  progress: language.level,
+                  color: language.color,
+                }}
+              />
+            ))}
+        </SimpleGrid>
+      </Group>
+    ),
+    skills: <div></div>,
   };
 
   return (
     <Group
-    mb="md"
+      mb="md"
       sx={{
         flex: 1,
         flexDirection: "column",
@@ -190,7 +303,7 @@ export function Showcase() {
         onChange={setTabValue}
         data={[
           { label: "Projects", value: "projects" },
-          { label: "Experiences", value: "experiences" },
+          { label: "Experience", value: "experiences" },
           { label: "Languages", value: "languages" },
           { label: "Skills", value: "skills" },
         ]}
@@ -203,7 +316,7 @@ export function Showcase() {
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <Card sx={{ cursor: "pointer" }} mb="md" shadow="sm" p="lg" radius="sm">
+    <Card sx={{ cursor: "pointer" }} mb="md" shadow="sm" p="lg" radius="md">
       <Card.Section inheritPadding py="xs">
         <Group position="apart">
           <Text weight={500}>{project.title}</Text>
@@ -237,5 +350,39 @@ function ProjectCard({ project }: { project: Project }) {
         </Link>
       </Card.Section>
     </Card>
+  );
+}
+
+interface StatsRingProps {
+  stat: {
+    label: string;
+    stats: string;
+    progress: number;
+    color: string;
+    // icon: "up" | "down";
+  };
+}
+
+export function StatsRing({ stat }: StatsRingProps) {
+  return (
+    <Paper radius="md" p="xs" key={stat.label}>
+      <Group>
+        <RingProgress
+          size={80}
+          roundCaps
+          thickness={8}
+          sections={[{ value: (100 * stat.progress) / 6, color: stat.color }]}
+        />
+
+        <div>
+          <Text color="dimmed" size="xs" transform="uppercase" weight={700}>
+            {stat.label}
+          </Text>
+          <Text weight={700} size="xl">
+            {stat.stats}
+          </Text>
+        </div>
+      </Group>
+    </Paper>
   );
 }

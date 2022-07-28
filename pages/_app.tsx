@@ -32,7 +32,7 @@ export default function App(props: AppProps) {
                 "#F4FFFD",
                 "#83838B",
                 "#1D1E2C",
-                "#343441",
+                "#4A4B56",
                 "#282937",
                 "#282937",
                 "#2F3043",
