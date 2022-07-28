@@ -23,12 +23,11 @@ const useStyles = createStyles((theme) => ({
 export function Footer() {
   const { classes } = useStyles();
   const environment = useEnvironment();
-  const isMobile = useMediaQuery(MOBILE_SIZE);
   const [language, setLanguage] = useRecoilState(languageState);
 
   return (
     <div className={classes.footer}>
-      <Group px={isMobile ? 10 : 60} align="center" sx={{ height: "100%", justifyContent: "space-between" }}>
+      <Group px={10} align="center" sx={{ height: "100%", justifyContent: "space-between" }}>
         {environment !== "production" && (
           <Select
             data-non-drag-target
@@ -39,7 +38,7 @@ export function Footer() {
               { value: "en-US", label: "English" },
               { value: "tr", label: "Turkish" },
             ]}
-            sx={{ maxWidth: 180 }}
+            sx={{ maxWidth: 140 }}
           />
         )}
         <Text size="xs" color="dimmed">
