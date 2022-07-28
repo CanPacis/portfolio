@@ -8,169 +8,19 @@ import {
   SegmentedControl,
   Text,
   Image,
-  Mark,
   Timeline,
-  Center,
   Paper,
   RingProgress,
   SimpleGrid,
+  createStyles,
+  UnstyledButton,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useListState, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import { useState } from "react";
-import { GitBranch, GitCommit, GitPullRequest, MessageDots } from "tabler-icons-react";
+import content, { Project, Tool } from "../../store/content";
 import { TABLET_SIZE, MOBILE_SIZE, DESKTOP_SIZE } from "../../store/responsiveStore";
-
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  link: string;
-  tags: string[];
-  actionLabel: string;
-}
-
-interface Experience {
-  company: string;
-  title: string;
-  description: string;
-  type: string;
-  image: string;
-  from: Date;
-  to: Date | null;
-}
-
-interface Language {
-  name: string;
-  level: number;
-  description: string;
-  image: string;
-  type: "programming" | "spoken";
-  color: string;
-}
-
-interface Skill {
-  name: string;
-  level: string;
-  description: string;
-}
-
-const tabs: { projects: Project[]; languages: Language[]; experiences: Experience[] } = {
-  projects: [
-    {
-      title: "Kâşif",
-      description:
-        "Kâşif; Turkish noun Explorer, A person who travels to places where few people have been before or places that are unknown to them, in order to find out more about them. Kâşif is a web based file explorer designed for every platform. If done, all major operating systems and web will be supported.",
-      image: "/kasif.png",
-      link: "https://github.com/Kasif-The-Explorer/kasif-the-explorer",
-      tags: ["React", "Desktop App"],
-      actionLabel: "See the repo",
-    },
-    {
-      title: "Affixi",
-      description:
-        "A helper library for Turkish noun suffixes written in typescript. Because Turkish is an agglutinative language and vowel harmony is a challenge, Affixi approaches the problem in a functional way and provides the primitives to create appropriate suffixes. An extensive documentation is available on the GitHub repository.",
-      image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-      link: "https://canpacis.github.io/affixi/",
-      tags: ["Library", "TypeScript"],
-      actionLabel: "See the docs",
-    },
-    {
-      title: "Birlang",
-      description: "Bir language where only one type exists.",
-      image: "/birlang.png",
-      link: "https://github.com/CanPacis/bir",
-      tags: ["Experimental", "TypeScript"],
-      actionLabel: "See the repo",
-    },
-    {
-      title: "Birlang Go",
-      description: "Bir language where only one type exists. But written in Go.",
-      image: "birlang-go.png",
-      link: "https://github.com/CanPacis/birlang",
-      tags: ["Experimental", "Go"],
-      actionLabel: "See the repo",
-    },
-    {
-      title: "Betic",
-      description: "Another programming language attempt",
-      image: "/betic.png",
-      link: "https://github.com/CanPacis/betic",
-      tags: ["Experimental", "TypeScript"],
-      actionLabel: "See the repo",
-    },
-    {
-      title: "Mantine",
-      description:
-        "A fully featured React components library. Build fully functional accessible web applications faster than ever - Mantine includes more than 100 customizable components and 40 hooks to cover you in any situation",
-      image: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png",
-      link: "https://mantine.dev",
-      tags: ["Library", "Contribution"],
-      actionLabel: "See the website",
-    },
-  ],
-
-  experiences: [
-    {
-      company: "Various",
-      title: "Freelance Developer",
-      type: "Contracted",
-      description: "I created small websites for small businesses and deployed them.",
-      image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-      from: new Date(2020, 0, 1),
-      to: new Date(2021, 1, 1),
-    },
-    {
-      company: "Viavis",
-      title: "Frontend Developer",
-      type: "Full-time",
-      description:
-        "I built and refactored large webapp architectures, migrated from old technologies to new ones and built admin and power user tools for the company.",
-      image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-      from: new Date(2021, 1, 1),
-      to: new Date(2022, 6, 1),
-    },
-    {
-      company: "Macellan",
-      title: "Senior Frontend Developer",
-      type: "Full-time",
-      description:
-        "I am building the company's main website and oversaw the development of the company's internal tools.",
-      image:
-        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-      from: new Date(2022, 6, 1),
-      to: null,
-    },
-  ],
-
-  languages: [
-    {
-      color: "orange",
-      type: "programming",
-      name: "JavaScript",
-      level: 6,
-      description: "Expert",
-      image: "/javascript.png",
-    },
-    {
-      color: "orange",
-      type: "programming",
-      name: "TypeScript",
-      level: 6,
-      description: "Expert",
-      image: "/typescript.png",
-    },
-    { color: "orange", type: "programming", name: "Go", level: 3, description: "Experienced", image: "/golang.webp" },
-    { color: "orange", type: "programming", name: "Dart", level: 1, description: "Beginner", image: "/dart.png" },
-    { color: "teal", type: "spoken", name: "Turkish", level: 6, description: "Native", image: "/turkey.jpg" },
-    { color: "teal", type: "spoken", name: "English", level: 6, description: "C2", image: "/england.jpg" },
-    { color: "teal", type: "spoken", name: "French", level: 1, description: "A1", image: "/france.jpg" },
-    { color: "teal", type: "spoken", name: "Swedish", level: 1, description: "A1", image: "/sweden.webp" },
-  ],
-};
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 export function Showcase() {
   const isDesktop = useMediaQuery(DESKTOP_SIZE);
@@ -197,7 +47,7 @@ export function Showcase() {
         withIndicators
         slideGap="xs"
       >
-        {tabs.projects.map((project) => (
+        {content.projects.map((project) => (
           <Carousel.Slide key={project.link}>
             <ProjectCard project={project} />
           </Carousel.Slide>
@@ -205,10 +55,10 @@ export function Showcase() {
       </Carousel>
     ),
     experiences: (
-      <Timeline lineWidth={3} active={tabs.experiences.length - 1} bulletSize={20} sx={{ maxWidth: contentWidth }}>
-        {tabs.experiences.map((experience, i) => (
+      <Timeline lineWidth={3} active={content.experiences.length - 1} bulletSize={20} sx={{ maxWidth: contentWidth }}>
+        {content.experiences.map((experience, i) => (
           <Timeline.Item
-            lineVariant={i === tabs.experiences.length - 2 ? "dashed" : "solid"}
+            lineVariant={i === content.experiences.length - 2 ? "dashed" : "solid"}
             key={experience.company}
             title={
               <>
@@ -247,7 +97,7 @@ export function Showcase() {
           Programming Languages
         </Text>
         <SimpleGrid cols={2} sx={{ width: "100%" }}>
-          {tabs.languages
+          {content.languages
             .filter((language) => language.type === "programming")
             .map((language) => (
               <StatsRing
@@ -265,7 +115,7 @@ export function Showcase() {
           Spoken Languages
         </Text>
         <SimpleGrid cols={2} sx={{ width: "100%" }}>
-          {tabs.languages
+          {content.languages
             .filter((language) => language.type === "spoken")
             .map((language) => (
               <StatsRing
@@ -281,7 +131,8 @@ export function Showcase() {
         </SimpleGrid>
       </Group>
     ),
-    skills: <div></div>,
+    tools: <DndList data={content.tools} contentWidth={contentWidth} />,
+    skills: <Skills contentWidth={contentWidth} />,
   };
 
   return (
@@ -298,13 +149,14 @@ export function Showcase() {
     >
       <SegmentedControl
         data-non-drag-target
-        size={isMobile ? "sm" : "lg"}
+        size={isMobile ? "xs" : "lg"}
         value={tabValue}
         onChange={setTabValue}
         data={[
           { label: "Projects", value: "projects" },
           { label: "Experience", value: "experiences" },
           { label: "Languages", value: "languages" },
+          { label: "Tools", value: "tools" },
           { label: "Skills", value: "skills" },
         ]}
       />
@@ -359,7 +211,6 @@ interface StatsRingProps {
     stats: string;
     progress: number;
     color: string;
-    // icon: "up" | "down";
   };
 }
 
@@ -384,5 +235,122 @@ export function StatsRing({ stat }: StatsRingProps) {
         </div>
       </Group>
     </Paper>
+  );
+}
+
+const useToolsStyles = createStyles((theme) => ({
+  item: {
+    ...theme.fn.focusStyles(),
+    display: "flex",
+    alignItems: "center",
+    borderRadius: theme.radius.md,
+    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]}`,
+    padding: `${theme.spacing.sm}px ${theme.spacing.xl}px`,
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.white,
+    marginBottom: theme.spacing.sm,
+  },
+
+  itemDragging: {
+    boxShadow: theme.shadows.sm,
+  },
+
+  symbol: {
+    fontSize: 30,
+    fontWeight: 700,
+    width: 60,
+  },
+}));
+
+export function DndList({ data, contentWidth }: { data: Tool[]; contentWidth: string }) {
+  const { classes, cx } = useToolsStyles();
+  const [state, handlers] = useListState(data);
+
+  const items = state.map((item, index) => (
+    <Draggable key={item.name} index={index} draggableId={item.logo}>
+      {(provided, snapshot) => (
+        <div
+          className={cx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          {/* <Text className={classes.symbol}>{item.logo}</Text> */}
+          <i className={`devicon-${item.logo}`}></i>
+          <div>
+            <Text>{item.name}</Text>
+            <Text color="dimmed" size="sm">
+              {item.description}
+            </Text>
+          </div>
+        </div>
+      )}
+    </Draggable>
+  ));
+
+  return (
+    <DragDropContext
+      onDragEnd={({ destination, source }) => handlers.reorder({ from: source.index, to: destination?.index || 0 })}
+    >
+      <Droppable droppableId="dnd-list" direction="vertical">
+        {(provided) => (
+          <Group {...provided.droppableProps} sx={{ width: contentWidth, gap: 0, "& > *": { width: "100%" } }} ref={provided.innerRef}>
+            {items}
+            {provided.placeholder}
+          </Group>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
+}
+
+const useSkillsStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
+  },
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 700,
+  },
+
+  item: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    borderRadius: theme.radius.md,
+    height: 90,
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+    transition: "box-shadow 150ms ease, transform 100ms ease",
+
+    "&:hover": {
+      boxShadow: `${theme.shadows.md} !important`,
+      transform: "scale(1.05)",
+    },
+  },
+}));
+
+export function Skills({ contentWidth }: { contentWidth: string }) {
+  const { classes, theme } = useSkillsStyles();
+
+  const items = content.skills.map((item) => (
+    <UnstyledButton key={item.name} className={classes.item}>
+      <item.icon color={theme.colors[item.color][6]} size={32} />
+      <Text size="xs" mt={7}>
+        {item.name}
+      </Text>
+    </UnstyledButton>
+  ));
+
+  return (
+    <Card sx={{ width: contentWidth }} radius="md" className={classes.card}>
+      <Group position="apart">
+        <Text className={classes.title}>My Main Skills</Text>
+      </Group>
+      <SimpleGrid cols={3} mt="md">
+        {items}
+      </SimpleGrid>
+    </Card>
   );
 }

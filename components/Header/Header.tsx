@@ -6,28 +6,12 @@ import { useRecoilValue } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
 import { useMediaQuery } from "@mantine/hooks";
 import { TABLET_SIZE, MOBILE_SIZE } from "../../store/responsiveStore";
-
-interface ContactItem {
-  label: string;
-  url: string;
-  icon: React.ReactElement;
-}
+import content from "../../store/content";
 
 export function Header() {
   const selected = useRecoilValue(selectionStore);
   const isTablet = useMediaQuery(TABLET_SIZE);
   const isMobile = useMediaQuery(MOBILE_SIZE);
-
-  const links: ContactItem[] = [
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/muhammed-ali-can-45761a206/", icon: <BrandLinkedin /> },
-    { label: "Github", url: "https://github.com/CanPacis/", icon: <BrandGithub /> },
-    { label: "Discord", url: "https://discordapp.com/users/0944/", icon: <BrandDiscord /> },
-    {
-      label: "Stackoverflow",
-      url: "https://stackoverflow.com/users/12360941/can-pacis/",
-      icon: <BrandStackoverflow />,
-    },
-  ];
 
   return (
     <header className={!isTablet ? classes.headerDesktop : classes.headerMobile}>
@@ -56,7 +40,7 @@ export function Header() {
           gap: isMobile ? theme.spacing.xs : theme.spacing.md,
         })}
       >
-        {links.map((link) => (
+        {content.contactList.map((link) => (
           <span key={link.url} data-capture-target={link.label} data-non-drag-target>
             <Link passHref target="_blank" href={link.url}>
               <ActionIcon color="blue" variant={selected.includes(link.label) ? "filled" : "light"} component="a">
