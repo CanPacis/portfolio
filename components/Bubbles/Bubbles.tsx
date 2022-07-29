@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
 import classes from "../../styles/Bubbles.module.css";
 import { Bubble } from "./Bubble";
-import { useSelect, defaultRender } from "./useSelect";
+import { useSelect, defaultRender } from "../../hooks/useSelect";
 const renderSelection = defaultRender();
 const DENSITY_CONSTANT = 14000;
 

@@ -1,4 +1,4 @@
-import { Rect } from "./useSelect";
+import { Rect } from "../../hooks/useSelect";
 
 export class Bubble {
   x!: number;

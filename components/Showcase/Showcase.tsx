@@ -80,7 +80,7 @@ export function Showcase() {
                 <Text size="lg" component="span">
                   {experience.title}
                 </Text>{" "}
-                <Text size="md" color="dimmed" component="span">
+                <Text data-non-drag-target size="md" color="dimmed" component="span">
                   @ {experience.company}
                 </Text>
               </>
