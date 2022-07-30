@@ -2,7 +2,7 @@ import { createStyles, Title, Text, Button, Container, Group, Loader } from "@ma
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Bubbles } from "../components/Bubbles";
-import { useEnvironment, useMaintenance } from "../hooks/useEnvironment";
+import { useEnvironment } from "../hooks/useEnvironment";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const useStyles = createStyles((theme) => ({
   label: {
     textAlign: "center",
     fontWeight: 900,
-    fontSize: 220,
+    fontSize: 120,
     lineHeight: 1,
     marginBottom: theme.spacing.xl * 1.5,
     color: theme.colors[theme.primaryColor][3],
@@ -50,13 +50,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function Soon() {
+export default function Maintenance() {
   const { classes } = useStyles();
   const router = useRouter();
   const environment = useEnvironment();
-  const maintenance = useMaintenance();
-
-  console.log(maintenance);
 
   useEffect(() => {
     if (environment !== "production" && typeof window !== "undefined") {
@@ -76,10 +73,10 @@ export default function Soon() {
     <div className={classes.root}>
       <Container>
         <Bubbles />
-        <div className={classes.label}>Soon</div>
-        <Title className={classes.title}>Coming Soon</Title>
+        <div className={classes.label}>Maintenance</div>
+        <Title className={classes.title}>I&apos;m Working On It</Title>
         <Text size="lg" align="center" className={classes.description}>
-          My personal website is currently under construction.
+          My personal website is currently under maintenance.
         </Text>
       </Container>
     </div>

@@ -10,14 +10,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { languageState } from "../store/content";
+import { useEnvironment, useMaintenance } from "../hooks/useEnvironment";
 
 const Home: NextPage = () => {
   const isTablet = useMediaQuery(TABLET_SIZE);
   const router = useRouter();
-  const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+  const environment = useEnvironment();
+  const maintenance = useMaintenance();
   const [language, setLanguage] = useRecoilState(languageState);
   const [localLanguage, setLocalLanguage] = useLocalStorage({ key: "language", defaultValue: language });
   const [isReady, setIsReady] = useState(false);
+
+  console.log(maintenance);
 
   useEffect(() => {
     setLanguage(localLanguage);
@@ -31,12 +35,12 @@ const Home: NextPage = () => {
   }, [language]);
 
   useEffect(() => {
-    if (isProduction && typeof window !== "undefined") {
+    if (environment === "production" && typeof window !== "undefined") {
       router.replace("/soon");
     }
-  }, [router, isProduction]);
+  }, [router, environment]);
 
-  if (isProduction) {
+  if (environment === "production") {
     return (
       <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
         <Loader variant="bars" />
