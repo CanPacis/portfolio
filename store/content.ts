@@ -74,7 +74,7 @@ export interface Content {
   skills: Skill[];
   siteKeys: {
     doubleClickToPreview: string;
-    myMainSkills: string,
+    myMainSkills: string;
     programmingLanguages: string;
     spokenLanguages: string;
     projects: string;
