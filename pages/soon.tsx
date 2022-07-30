@@ -2,7 +2,7 @@ import { createStyles, Title, Text, Button, Container, Group, Loader } from "@ma
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Bubbles } from "../components/Bubbles";
-import { useEnvironment, useMaintenance } from "../hooks/useEnvironment";
+import { useEnvironment } from "../hooks/useEnvironment";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -54,9 +54,6 @@ export default function Soon() {
   const { classes } = useStyles();
   const router = useRouter();
   const environment = useEnvironment();
-  const maintenance = useMaintenance();
-
-  console.log(maintenance);
 
   useEffect(() => {
     if (environment !== "production" && typeof window !== "undefined") {

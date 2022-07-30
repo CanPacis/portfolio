@@ -1,9 +1,7 @@
 import { createStyles, Text, Group, Select } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import { useRecoilState } from "recoil";
 import { useEnvironment } from "../../hooks/useEnvironment";
 import { languageState } from "../../store/content";
-import { MOBILE_SIZE } from "../../store/responsiveStore";
 
 const useStyles = createStyles((theme) => ({
   footer: {

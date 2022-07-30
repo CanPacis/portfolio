@@ -1,9 +1,8 @@
-import React from "react";
 import { createStyles, Title, Text, Container, Group, Loader } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Bubbles } from "../components/Bubbles";
-import { useEnvironment } from "../hooks/useEnvironment";
+import { useMaintenance } from "../hooks/useEnvironment";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -54,7 +53,21 @@ const useStyles = createStyles((theme) => ({
 export default function Maintenance() {
   const { classes } = useStyles();
   const router = useRouter();
-  const environment = useEnvironment();
+  const maintenance = useMaintenance();
+
+  useEffect(() => {
+    if (!maintenance && typeof window !== "undefined") {
+      router.replace("/");
+    }
+  }, [router, maintenance]);
+
+  if (!maintenance) {
+    return (
+      <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
+        <Loader variant="bars" />
+      </Group>
+    );
+  }
 
   return (
     <div className={classes.root}>

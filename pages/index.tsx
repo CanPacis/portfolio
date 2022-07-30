@@ -9,11 +9,10 @@ import { TABLET_SIZE } from "../store/responsiveStore";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { languageState } from "../store/content";
-import { useEnvironment, useMaintenance } from "../hooks/useEnvironment";
+import { useMaintenance } from "../hooks/useEnvironment";
 
 const Home: NextPage = () => {
   const isTablet = useMediaQuery(TABLET_SIZE);
-  const environment = useEnvironment();
   const maintenance = useMaintenance();
   const [language, setLanguage] = useRecoilState(languageState);
   const [localLanguage, setLocalLanguage] = useLocalStorage({ key: "language", defaultValue: language });
@@ -30,7 +29,7 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
-  if (environment === "production" || maintenance || !isReady) {
+  if (maintenance || !isReady) {
     return (
       <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
         <Loader variant="bars" />

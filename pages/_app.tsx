@@ -9,20 +9,13 @@ import { useMediaQuery } from "@mantine/hooks";
 import { TABLET_SIZE } from "../store/responsiveStore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useEnvironment, useMaintenance } from "../hooks/useEnvironment";
+import { useMaintenance } from "../hooks/useEnvironment";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
   const router = useRouter();
-  const environment = useEnvironment();
   const maintenance = useMaintenance();
   const isTablet = useMediaQuery(TABLET_SIZE);
-
-  useEffect(() => {
-    if (environment === "production" && typeof window !== "undefined" && router.pathname !== "/soon") {
-      router.replace("/soon");
-    }
-  }, [router, environment]);
 
   useEffect(() => {
     if (maintenance && typeof window !== "undefined" && router.pathname !== "/maintenance") {
