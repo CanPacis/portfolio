@@ -1,7 +1,5 @@
-import { BrandLinkedin, BrandGithub, BrandDiscord, BrandStackoverflow } from "tabler-icons-react";
 import { Avatar, Divider, Group, ActionIcon, Tooltip } from "@mantine/core";
 import classes from "../../styles/Header.module.css";
-import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { selectionStore } from "../../store/selectionStore";
 import { useMediaQuery } from "@mantine/hooks";
@@ -12,7 +10,7 @@ export function Header() {
   const selected = useRecoilValue(selectionStore);
   const isTablet = useMediaQuery(TABLET_SIZE);
   const isMobile = useMediaQuery(MOBILE_SIZE);
-  const content = useContent()
+  const content = useContent();
 
   return (
     <header className={!isTablet ? classes.headerDesktop : classes.headerMobile}>
@@ -43,11 +41,17 @@ export function Header() {
       >
         {content.contactList.map((link) => (
           <span key={link.url} data-capture-target={link.label} data-non-drag-target>
-            <Link passHref target="_blank" href={link.url}>
-              <ActionIcon color="blue" variant={selected.includes(link.label) ? "filled" : "light"} component="a">
+            <Tooltip label={link.label} position={isMobile ? "bottom" : "left"}>
+              <ActionIcon
+                target="_blank"
+                href={link.url}
+                color="blue"
+                variant={selected.includes(link.label) ? "filled" : "light"}
+                component="a"
+              >
                 {link.icon}
               </ActionIcon>
-            </Link>
+            </Tooltip>
           </span>
         ))}
       </Group>
@@ -56,7 +60,7 @@ export function Header() {
           size="sm"
           color="blue"
           orientation={isTablet ? "horizontal" : "vertical"}
-          sx={{ margin: "auto", opacity: 0.4, [isTablet ? "width" : "height"]: isMobile ? 30 : 100 }}
+          sx={{ margin: "auto", opacity: 0.4, [isTablet ? "width" : "height"]: 60 }}
         />
       )}
     </header>

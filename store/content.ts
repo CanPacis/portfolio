@@ -101,7 +101,7 @@ export const enUS: Content = {
   contactList: [
     {
       label: "LinkedIn",
-      url: "https://www.linkedin.com/in/muhammed-ali-can-45761a206/",
+      url: "https://www.linkedin.com/in/can-pacis/",
       icon: React.createElement(BrandLinkedin),
     },
     { label: "Github", url: "https://github.com/CanPacis/", icon: React.createElement(BrandGithub) },
@@ -417,20 +417,7 @@ export const tr: Content = {
   heroSubtitle: "Web teknolojilerini kullanarak uygulamalar yazıyorum.",
   heroParagraph:
     "Kendi kendini yetiştirmiş ve meraklı bir yazılımcıyım. Sadece öğrenen değil, öğrenmeyi seven biriyim. Gitarı ve piyanoyu çalmayı kendi kendime öğrendim, neredeyse hiç yardım almadan İngilizce öğrendim ve en önemlisi, kendime yazılımı öğrettim. Hâlâ her alanda yeni şeyler öğrenmeye çalışıyor ve bilgiyi arıyorum.",
-  contactList: [
-    {
-      label: "LinkedIn",
-      url: "https://www.linkedin.com/in/muhammed-ali-can-45761a206/",
-      icon: React.createElement(BrandLinkedin),
-    },
-    { label: "Github", url: "https://github.com/CanPacis/", icon: React.createElement(BrandGithub) },
-    { label: "Discord", url: "https://discordapp.com/users/0944/", icon: React.createElement(BrandDiscord) },
-    {
-      label: "Stackoverflow",
-      url: "https://stackoverflow.com/users/12360941/can-pacis/",
-      icon: React.createElement(BrandStackoverflow),
-    },
-  ],
+  contactList: enUS.contactList,
   projects: [
     {
       title: "Kâşif",
