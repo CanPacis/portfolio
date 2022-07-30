@@ -6,7 +6,6 @@ import { Hero } from "../components/Hero";
 import { Showcase } from "../components/Showcase";
 import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import { TABLET_SIZE } from "../store/responsiveStore";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { languageState } from "../store/content";
@@ -14,14 +13,11 @@ import { useEnvironment, useMaintenance } from "../hooks/useEnvironment";
 
 const Home: NextPage = () => {
   const isTablet = useMediaQuery(TABLET_SIZE);
-  const router = useRouter();
   const environment = useEnvironment();
   const maintenance = useMaintenance();
   const [language, setLanguage] = useRecoilState(languageState);
   const [localLanguage, setLocalLanguage] = useLocalStorage({ key: "language", defaultValue: language });
   const [isReady, setIsReady] = useState(false);
-
-  console.log(maintenance);
 
   useEffect(() => {
     setLanguage(localLanguage);
@@ -34,21 +30,7 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
-  useEffect(() => {
-    if (environment === "production" && typeof window !== "undefined") {
-      router.replace("/soon");
-    }
-  }, [router, environment]);
-
-  if (environment === "production") {
-    return (
-      <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
-        <Loader variant="bars" />
-      </Group>
-    );
-  }
-
-  if (!isReady) {
+  if (environment === "production" || maintenance || !isReady) {
     return (
       <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
         <Loader variant="bars" />

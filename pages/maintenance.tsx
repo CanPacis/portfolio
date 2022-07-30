@@ -1,4 +1,5 @@
-import { createStyles, Title, Text, Button, Container, Group, Loader } from "@mantine/core";
+import React from "react";
+import { createStyles, Title, Text, Container, Group, Loader } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Bubbles } from "../components/Bubbles";
@@ -54,20 +55,6 @@ export default function Maintenance() {
   const { classes } = useStyles();
   const router = useRouter();
   const environment = useEnvironment();
-
-  useEffect(() => {
-    if (environment !== "production" && typeof window !== "undefined") {
-      router.replace("/");
-    }
-  }, [router, environment]);
-
-  if (environment !== "production") {
-    return (
-      <Group sx={{ width: "100vw", height: "100vh", justifyContent: "center", alignItems: "center" }}>
-        <Loader variant="bars" />
-      </Group>
-    );
-  }
 
   return (
     <div className={classes.root}>
