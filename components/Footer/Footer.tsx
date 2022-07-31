@@ -1,6 +1,5 @@
 import { createStyles, Text, Group, Select } from "@mantine/core";
 import { useRecoilState } from "recoil";
-import { useEnvironment } from "../../hooks/useEnvironment";
 import { languageState } from "../../store/content";
 
 const useStyles = createStyles((theme) => ({
@@ -20,25 +19,22 @@ const useStyles = createStyles((theme) => ({
 
 export function Footer() {
   const { classes } = useStyles();
-  const environment = useEnvironment();
   const [language, setLanguage] = useRecoilState(languageState);
 
   return (
     <div className={classes.footer}>
       <Group px={10} align="center" sx={{ height: "100%", justifyContent: "space-between" }}>
-        {environment !== "production" && (
-          <Select
-            data-non-drag-target
-            value={language}
-            onChange={(value) => setLanguage(value || "en-US")}
-            placeholder="Language"
-            data={[
-              { value: "en-US", label: "English" },
-              { value: "tr", label: "Turkish" },
-            ]}
-            sx={{ maxWidth: 140 }}
-          />
-        )}
+        <Select
+          data-non-drag-target
+          value={language}
+          onChange={(value) => setLanguage(value || "en-US")}
+          placeholder="Language"
+          data={[
+            { value: "en-US", label: "English" },
+            { value: "tr", label: "Turkish" },
+          ]}
+          sx={{ maxWidth: 140 }}
+        />
         <Text size="xs" color="dimmed">
           Muhammed Ali CAN - 2022
         </Text>

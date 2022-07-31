@@ -12,6 +12,7 @@ import {
   Code,
   Icon,
   Users,
+  Article,
 } from "tabler-icons-react";
 import { Text } from "@mantine/core";
 
@@ -110,6 +111,11 @@ export const enUS: Content = {
       label: "Stackoverflow",
       url: "https://stackoverflow.com/users/12360941/can-pacis/",
       icon: React.createElement(BrandStackoverflow),
+    },
+    {
+      label: "Blog",
+      url: "https://blog.canpacis.net",
+      icon: React.createElement(Article),
     },
   ],
   projects: [
