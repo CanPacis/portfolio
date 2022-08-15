@@ -112,11 +112,11 @@ export const enUS: Content = {
       url: "https://stackoverflow.com/users/12360941/can-pacis/",
       icon: React.createElement(BrandStackoverflow),
     },
-    {
-      label: "Blog",
-      url: "https://blog.canpacis.net",
-      icon: React.createElement(Article),
-    },
+    // {
+    //   label: "Blog",
+    //   url: "https://blog.canpacis.net",
+    //   icon: React.createElement(Article),
+    // },
   ],
   projects: [
     {
@@ -216,17 +216,17 @@ export const enUS: Content = {
       from: new Date(2021, 1, 1),
       to: new Date(2022, 7, 1),
     },
-    // {
-    //   company: "Macellan",
-    //   title: "Senior Frontend Developer",
-    //   type: "Full-time",
-    //   description:
-    //     "I am building the company's main website and oversee the development of the company's internal tools.",
-    //   image:
-    //     "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-    //   from: new Date(2022, 7, 1),
-    //   to: null,
-    // },
+    {
+      company: "Macellan",
+      title: "Senior Frontend Developer",
+      type: "Full-time",
+      description:
+        "I am building the company's main website and oversee the development of the company's internal tools.",
+      image:
+        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+      from: new Date(2022, 7, 1),
+      to: null,
+    },
   ],
 
   languages: [
@@ -522,17 +522,17 @@ export const tr: Content = {
       from: new Date(2021, 1, 1),
       to: new Date(2022, 7, 1),
     },
-    // {
-    //   company: "Macellan",
-    //   title: "Kıdemli Arayüz Geliştiricisi",
-    //   type: "Tam zamanlı",
-    //   description:
-    //     "Ürünlerin kurumsal web sitelerini geliştiriyor ve şirkette kullanılan araçların geliştirilmesini izliyorum.",
-    //   image:
-    //     "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
-    //   from: new Date(2022, 7, 1),
-    //   to: null,
-    // },
+    {
+      company: "Macellan",
+      title: "Kıdemli Arayüz Geliştiricisi",
+      type: "Tam zamanlı",
+      description:
+        "Ürünlerin kurumsal web sitelerini geliştiriyor ve şirkette kullanılan araçların geliştirilmesini izliyorum.",
+      image:
+        "https://opengraph.githubassets.com/ac11ecea9786cc632fbe114d80ed42a3d47ac1dd2f397f9cbbb3ba57ffaecb19/CanPacis/affixi",
+      from: new Date(2022, 7, 1),
+      to: null,
+    },
   ],
 
   languages: [
